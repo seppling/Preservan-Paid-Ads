@@ -94,102 +94,67 @@ svg text{fill:var(--ink2);font-family:var(--mono);font-size:11px}
 .small{font-size:12px;color:var(--ink3)}
 @media (prefers-reduced-motion:reduce){#tip{transition:none}}
 </style>
-
 <div class="wrap">
 <header>
-  <div class="eyebrow">Preservan · Lead qualification and booking · 2026 YTD</div>
-  <h1>Booked leads are healthy overall. Meta leads arrive slower and book less.</h1>
-  <p class="lede">983 contacts created Jan 1 to Oct 7, 2026, from HubSpot exports. "Customer" is treated as assessment booked, because a deal is created within a minute of the customer change for 85% of leads that have both.</p>
-  <div class="meta">Sources: 2026 Contacts export, Filtered Contacts 2 export, Jobber quotes export · $27K YTD ad spend assumed to be Meta</div>
+  <div class="eyebrow">Preservan · Meta lead intake and booking · 2026 YTD</div>
+  <h1>Meta leads book about 25 points below other sources. Slow response alone does not explain it.</h1>
+  <p class="lede">983 contacts created Jan 1 to Oct 7, 2026. A booked lead is one in Assessment Scheduled or any later status. Time to deal is the closest available measure of how fast a lead is booked, because first-contact times are not tracked.</p>
 </header>
 
-<div class="tiles">
-  <div class="tile"><div class="k">Booking rate, all leads</div><div class="v">73%<small>720 of 983</small></div><div class="d">79% once junk and out-of-territory leads are removed.</div></div>
-  <div class="tile"><div class="k">Booking rate, Meta</div><div class="v">60%<small>272 of 455</small></div><div class="d">65% after removing 36 junk or out-of-territory leads.</div></div>
-  <div class="tile"><div class="k">Meta time to deal, typical</div><div class="v">3.4 h<small>median</small></div><div class="d">26 hours with the slow tail left in.</div></div>
-  <div class="tile"><div class="k">Meta weekend leads</div><div class="v">17 h<small>vs 1.4 h weekday</small></div><div class="d">Only 56% get a deal within 24 hours, against 83% on weekdays.</div></div>
-  <div class="tile"><div class="k">Cost per Meta lead</div><div class="v">$59<small>CPL</small></div><div class="d">About $99 per booked assessment and $191 per approved quote or invoice.</div></div>
-</div>
-
 <section>
-  <div><div class="eyebrow">Part 1</div><h2>Booking rate</h2></div>
-  <div class="grid">
-    <div class="card">
-      <h3>Booking rate by source</h3>
-      <div class="sub">Share of leads now in Assessment Scheduled or any later status.</div>
-      <div id="c-source" role="img" aria-label="Booking rate by traffic source"></div>
-      <div class="take">Meta is 46% of lead volume and books 21 to 28 points below every other source.</div>
-      <div id="t-source"></div>
-    </div>
-    <div class="card">
-      <h3>Meta booking rate by month created</h3>
-      <div class="sub">Share of each month's Meta leads now booked. September is still maturing.</div>
-      <div id="c-mkt" role="img" aria-label="Meta booking rate by marketing contact status"></div>
-      <div class="take">January to May and September ran at 39 to 66%, and July peaked at 81%. 116 Meta leads carry a non-marketing contact flag (13% booked), 89 of them from January to May. All of them are counted as Meta here.</div>
-      <div id="t-mkt"></div>
-    </div>
+  <div class="eyebrow">Key insights</div>
+  <div class="insights">
+    <div class="ins"><div class="tag">Booking gap</div><p><b>Meta books 60%. Other sources book 81 to 88%.</b> Meta is 46% of lead volume (455 of 983), so the gap affects the largest share of leads.</p></div>
+    <div class="ins"><div class="tag">Speed</div><p><b>A typical Meta lead gets a deal in 3.4 hours, but 1 in 4 takes more than 4.7 days.</b> Weekend leads take 17 hours at the median against 1.4 on weekdays, and evening leads take 12 to 14 hours.</p></div>
+    <div class="ins"><div class="tag">Caution</div><p><b>Slower response has not lowered the booking rate.</b> Meta leads created on weekends and evenings book at 59.8%, the same as weekday daytime leads at 59.7%. Speed is a hypothesis here, not a proven cause.</p></div>
+    <div class="ins"><div class="tag">Stalled leads</div><p><b>93 Meta leads are stuck</b> (53 New Lead, 30 Cold, 10 Pending), with about 9 touches each. Another 27 are out of territory, which is an ad targeting issue.</p></div>
+    <div class="ins"><div class="tag">Upside</div><p><b>If intake is the driver, 5 to 15 points of lift is worth $17K to $50K year to date.</b> That uses the $1,427 Meta ticket and a 52% close rate from HubSpot status.</p></div>
+    <div class="ins"><div class="tag">Blind spot</div><p><b>First-contact speed cannot be measured.</b> Only 66 of 2,174 contacts have a first-call date. Without it, no one can prove or rule out an intake problem.</p></div>
   </div>
-</section>
-
-<section>
-  <div><div class="eyebrow">Part 2</div><h2>Speed from contact created to deal created</h2></div>
-  <div class="lede">Deal creation tracks the Customer change, so it is the best available proxy for time to book. It is not time to first contact.</div>
-
   <div class="card">
-    <h3>Meta deals by hours to create, with the long tail marked</h3>
-    <div class="sub">232 Meta leads with a deal, created Mar to Oct. The dashed line is the 113 hour trimming cutoff.</div>
-    <div style="position:relative">
-      <div id="c-hist" role="img" aria-label="Histogram of Meta hours to deal creation"></div>
-    </div>
-    <div class="legend"><span><i style="background:var(--s1)"></i>Kept in typical picture (175)</span><span><i style="background:repeating-linear-gradient(135deg,var(--s2) 0 3px,transparent 3px 6px);border:1px solid var(--s2)"></i>Trimmed as long tail (57, 25%)</span></div>
-    <div class="take">Half of kept Meta deals appear within 4 hours. One in four takes longer than 4.7 days, and those leads are real, so they are still a problem even though they are left out of the typical numbers.</div>
-    <div id="t-hist"></div>
-  </div>
-
-  <div class="card">
-    <h3>Trimming effect on median and mean, in hours</h3>
-    <div class="sub">All sources, contacts created Mar to Oct.</div>
-    <div class="scroll"><table id="trim-table"></table></div>
-  </div>
-
-  <div class="grid">
-    <div class="card">
-      <h3>Meta median hours to deal, by time created</h3>
-      <div class="sub">Trimmed. Weekday versus weekend, then time of day.</div>
-      <div id="c-when" role="img" aria-label="Meta median hours to deal by weekday and time of day"></div>
-      <div class="take">Leads created on weekends and between 6 PM and midnight wait roughly 10 to 25 times longer than weekday daytime leads.</div>
-      <div id="t-when"></div>
-    </div>
-    <div class="card">
-      <h3>Meta median hours to deal, by month</h3>
-      <div class="sub">Trimmed. Small monthly samples, so read direction only.</div>
-      <div id="c-month" role="img" aria-label="Meta median hours to deal by month"></div>
-      <div class="take">Spring was fast. May, June and September ran 9 to 12 hours. July was the volume peak and held at 1.7 hours.</div>
-      <div id="t-month"></div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div><div class="eyebrow">Part 3</div><h2>Recorded first call times</h2></div>
-  <div class="card">
-    <h3>Hours from contact created to first call</h3>
-    <div class="sub">15 contacts called within 7 days of creation, log scale. 10 more calls came later than 7 days and are not shown.</div>
-    <div id="c-calls" role="img" aria-label="Dot plot of hours to first call"></div>
-    <div class="legend"><span>Median 1.5 h</span><span>40% within 1 hour</span><span>67% within 4 hours</span><span>Longest 93 h</span></div>
-    <div class="take">Only 66 of 2,174 contacts have a first call date, and just 17 were created since March. When a call is logged, it is usually fast, and the deal appears 4 to 16 minutes later in 6 of 15 cases. That points to the first call being where the assessment gets booked.</div>
+    <h3>Recommended next steps</h3>
     <ul class="plain">
-      <li><b>41 of 66</b> have the call logged within a minute of contact creation. These look like inbound calls that created the contact, and 39 of the 41 date from Aug to Nov 2025.</li>
-      <li><b>25 of 66</b> were called after creation. Median 41.6 hours untrimmed, 1.5 hours trimmed to 7 days.</li>
-      <li>Booking rate in this group is 79%, but callers were skewed toward people already ready to book. It says little about call speed.</li>
+      <li><b>Test a local first touch.</b> Send Meta leads a text from a local number within 5 minutes, with a booking link, and compare booking rate over about 3 months.</li>
+      <li><b>Log the first touch.</b> Ask corporate to record the first call or text, with a timestamp, on every lead.</li>
+      <li><b>Cover weekends and evenings.</b> Use an automatic text with a booking link, or extend CSR hours.</li>
+      <li><b>Work the stalled leads and fix targeting.</b> Review the 93 stuck Meta leads, and ask the agency to tighten geography to cut out-of-territory leads.</li>
+      <li><b>Confirm two HubSpot definitions.</b> What sets the marketing contact flag, and what New Approved Quote means. Both affect reporting.</li>
     </ul>
   </div>
 </section>
 
 <section>
-  <div><div class="eyebrow">Part 4</div><h2>What a lift in Meta bookings could be worth</h2></div>
-  <div class="lede">A what-if for the case where slow intake is the main reason Meta books less. Earlier testing found no booking-rate difference between fast and slow response windows, so treat this as upside, not a forecast.</div>
+  <div class="eyebrow">Evidence</div>
+  <div class="grid">
+    <div class="card">
+      <h3>Booking rate by source</h3>
+      <div class="sub">Share of leads now in Assessment Scheduled or later.</div>
+      <div id="c-source" role="img" aria-label="Booking rate by traffic source"></div>
+      <div id="t-source"></div>
+    </div>
+    <div class="card">
+      <h3>Booking rate by when the Meta lead arrived</h3>
+      <div class="sub">Weekday daytime leads get the fastest response. Weekend and evening leads wait longest.</div>
+      <div id="c-window" role="img" aria-label="Meta booking rate and hours to deal by arrival window"></div>
+      <div class="take">Median response time is more than 20 times longer in the slow windows, and booking rate does not move.</div>
+      <div id="t-window"></div>
+    </div>
+  </div>
+
   <div class="card">
+    <h3>Meta deals by hours to create, long tail marked</h3>
+    <div class="sub">232 Meta leads with a deal, created Mar to Oct. The dashed line is the 113 hour trimming cutoff.</div>
+    <div style="position:relative"><div id="c-hist" role="img" aria-label="Histogram of Meta hours to deal creation"></div></div>
+    <div class="legend"><span><i style="background:var(--s1)"></i>Kept in typical picture (175)</span><span><i style="background:repeating-linear-gradient(135deg,var(--s2) 0 3px,transparent 3px 6px);border:1px solid var(--s2)"></i>Trimmed as long tail (57, 25%)</span></div>
+    <div class="take">Half of the kept deals appear within 4 hours. The trimmed 25% are real leads that took more than 4.7 days. Meta median is 14 hours untrimmed and 3.4 hours trimmed.</div>
+    <div id="t-hist"></div>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow">Revenue what-if</div>
+  <div class="card">
+    <h3>Value of a lift in Meta booking rate, if intake is the driver</h3>
     <div style="display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center">
       <label class="small" for="lift-mode">Lift means</label>
       <select id="lift-mode" style="font:inherit;font-size:13px;padding:6px 8px;border-radius:4px;border:1px solid var(--line);background:var(--surface);color:var(--ink)">
@@ -204,111 +169,38 @@ svg text{fill:var(--ink2);font-family:var(--mono);font-size:11px}
     </div>
     <div class="scroll"><table id="rev-table"></table></div>
     <div id="rev-bars" role="img" aria-label="Revenue upside by scenario"></div>
-    <div class="legend"><span><i style="background:var(--s1)"></i>Extra booked assessments closing at the HubSpot rate (52%) and the $1,427 Meta ticket</span></div>
     <div class="take" id="rev-take"></div>
-  </div>
-  <div class="grid">
-    <div class="card">
-      <h3>Inputs used</h3>
-      <div class="scroll"><table class="wrap">
-        <tr><th>Input</th><th>Value</th></tr>
-        <tr><td>Meta leads, 2026 YTD</td><td class="num">455</td></tr>
-        <tr><td>Meta booked now</td><td class="num">272 (59.8%)</td></tr>
-        <tr><td>Average Meta ticket (converted quotes, n 50)</td><td class="num">$1,427</td></tr>
-        <tr><td>Median Meta ticket</td><td class="num">$1,125</td></tr>
-        <tr><td>Meta booked leads in an approved or invoiced status</td><td class="num">141 of 272 (51.8%)</td></tr>
-        <tr><td>Revenue per extra booking</td><td class="num">$740</td></tr>
-      </table></div>
-      <div class="small">Close rate is the share of today's Meta bookings in New Approved Quote or Invoice Sent in HubSpot. The ticket is the average converted Meta quote in Jobber.</div>
-    </div>
-    <div class="card">
-      <h3>Ticket size by source</h3>
-      <div class="sub">Converted quotes linked to 2026 contacts. Average and median in dollars.</div>
-      <div class="scroll"><table>
-        <tr><th>Source</th><th>Quotes</th><th>Average</th><th>Median</th></tr>
-        <tr class="emph"><td>Meta</td><td class="num">50</td><td class="num">$1,427</td><td class="num">$1,125</td></tr>
-        <tr><td>Direct</td><td class="num">17</td><td class="num">$2,050</td><td class="num">$2,400</td></tr>
-        <tr><td>Organic search</td><td class="num">10</td><td class="num">$1,998</td><td class="num">$2,018</td></tr>
-        <tr><td>Offline</td><td class="num">56</td><td class="num">$1,919</td><td class="num">$890</td></tr>
-        <tr><td>All 2026 contacts</td><td class="num">140</td><td class="num">$1,754</td><td class="num">$1,283</td></tr>
-        <tr><td>All quotes since Jul 2024</td><td class="num">391</td><td class="num">$2,117</td><td class="num">$1,438</td></tr>
-      </table></div>
-      <div class="small">Meta jobs run about 20% smaller than the 2026 average. Company-wide tickets are skewed by a few large jobs. Without quotes over $5,354 (Tukey fence), the all-time average is $1,599.</div>
-    </div>
-  </div>
-  <div class="card">
-    <h3>What to check before relying on this</h3>
-    <ul class="plain">
-      <li><b>Close rate comes from HubSpot status.</b> It treats New Approved Quote and Invoice Sent as wins. Jobber shows fewer converted quotes, so if that status overstates wins, the dollar figures fall.</li>
-      <li><b>Ticket is from a small sample.</b> 50 converted Meta quotes, matched to contacts by email, phone, then name.</li>
-      <li><b>Revenue, not profit.</b> This is quoted job value before costs, and extra Meta bookings may close at a different rate than today's.</li>
-    </ul>
+    <div class="small">Extra bookings × 52% close rate (141 of 272 Meta bookings in an approved or invoiced HubSpot status) × $1,427 average Meta ticket (50 converted quotes in Jobber, median $1,125). This is quoted revenue before costs, and Meta tickets run about 20% below the 2026 average.</div>
   </div>
 </section>
 
 <section>
-  <div><div class="eyebrow">Method</div><h2>Methodology and data trimming</h2></div>
-  <div class="steps">
-    <div class="step"><div class="n">983</div><div class="t">Contacts created in 2026</div></div>
-    <div class="step"><div class="n">726</div><div class="t">Have a deal. Time to deal is measured only on these.</div></div>
-    <div class="step cut"><div class="n">−52</div><div class="t">Jan and Feb contacts. Their deals were created in bulk later, with medians over 4,000 hours.</div></div>
-    <div class="step"><div class="n">674</div><div class="t">Analysed, Mar to Oct</div></div>
-    <div class="step cut"><div class="n">−120</div><div class="t">Over 113 hours, the long tail (18%)</div></div>
-    <div class="step"><div class="n">554</div><div class="t">Kept for the typical picture</div></div>
-  </div>
-  <div class="grid">
-    <div class="card">
-      <h3>How the cutoff was chosen</h3>
-      <ul class="plain">
-        <li>Raw hours are heavily right-skewed (skewness 7.0), so the mean mostly reflects the tail.</li>
-        <li>A log-scale outlier test flagged nothing. After a log transform the data is nearly symmetric (skewness 0.13), so the tail is the natural shape of the data and not bad records.</li>
-        <li>The cutoff is a Tukey upper fence on raw hours: Q3 + 1.5 × IQR = 45 + 1.5 × 45 = <b>113 hours (4.7 days)</b>, set once across all sources.</li>
-        <li>The exclusion is a presentation choice. Those 120 deals are mostly booked or quoted customers who simply took longer.</li>
-        <li>Offline and many short Meta values are contacts created already booked, so a median near zero partly reflects how the record was created. Excluding anything under 5 minutes, the trimmed Meta median is 8.3 hours.</li>
-      </ul>
+  <details class="card">
+    <summary>Method, trimming and data notes</summary>
+    <div class="steps" style="margin-top:12px">
+      <div class="step"><div class="n">983</div><div class="t">Contacts created in 2026</div></div>
+      <div class="step"><div class="n">726</div><div class="t">Have a deal. Time to deal is measured only on these.</div></div>
+      <div class="step cut"><div class="n">−52</div><div class="t">Jan and Feb contacts. Their deals were created in bulk later, with medians over 4,000 hours.</div></div>
+      <div class="step"><div class="n">674</div><div class="t">Analysed, Mar to Oct</div></div>
+      <div class="step cut"><div class="n">−120</div><div class="t">Over 113 hours, the long tail (18%)</div></div>
+      <div class="step"><div class="n">554</div><div class="t">Kept for the typical picture</div></div>
     </div>
-    <div class="card">
-      <h3>Result across other cutoffs</h3>
-      <div class="sub">All sources, 674 deals. The conclusion does not depend on the exact cutoff.</div>
-      <div class="scroll"><table id="sens-table"></table></div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div><div class="eyebrow">Findings</div><h2>Key directional insights</h2></div>
-  <div class="insights">
-    <div class="ins"><div class="tag">Booking</div><p><b>Meta books at 60%, other sources at 81 to 88%.</b> The gap is widest in Jan to May and Sep. Meta leads with a non-marketing flag (116) booked at 13% and skew to Not Interested, OOT and Cold.</p></div>
-    <div class="ins"><div class="tag">Speed</div><p><b>Typical Meta deal appears in 3.4 hours.</b> Across all sources the typical lead is booked in under an hour, so Meta is the slow channel.</p></div>
-    <div class="ins"><div class="tag">Coverage gap</div><p><b>Weekends and evenings are the weak spot.</b> Weekend Meta leads take 17 hours at the median and 6 to 9 PM leads take 14 hours, against 1.4 and 0.6 hours in the daytime.</p></div>
-    <div class="ins"><div class="tag">Long tail</div><p><b>One in four Meta leads takes more than 4.7 days to book.</b> 53 Meta leads are still at New Lead after about 9 touches each, and 30 more are Cold Lead.</p></div>
-    <div class="ins"><div class="tag">Calls</div><p><b>When a first call is logged, it works.</b> The deal usually follows within minutes. Logging is too thin (66 contacts) to measure speed to contact.</p></div>
-    <div class="ins"><div class="tag">Cost</div><p><b>About $99 per booked Meta assessment.</b> Raising the Meta booking rate to the other sources' level would cut that cost by about a quarter.</p></div>
-  </div>
-  <div class="card">
-    <h3>Suggested next steps</h3>
-    <ul class="plain">
-      <li><b>Cover weekends and evenings.</b> Use an auto-reply with a booking link, or extend CSR hours, for Meta leads created after 6 PM and on Saturday and Sunday.</li>
-      <li><b>Audit the marketing contact flag.</b> Meta leads should all be marketing contacts. Find what sets non-marketing in HubSpot, and fix it so source reporting stays clean.</li>
-      <li><b>Review Meta targeting and form questions</b> with the agency, using out-of-territory and Not Interested rates as the quality signal.</li>
-      <li><b>Work the stalled leads.</b> Triage the 53 Meta New Lead and 30 Cold Lead contacts for reactivation or clean-up.</li>
-      <li><b>Log the first call every time.</b> Without a timestamp, speed to first contact cannot be measured. Revisit in 60 to 90 days.</li>
+    <ul class="plain" style="margin-top:12px">
+      <li><b>Cutoff.</b> Raw hours are heavily skewed (skewness 7.0). A log-scale outlier test flagged nothing, because the data is nearly symmetric once logged (skewness 0.13), so the tail is the natural shape. I used a Tukey upper fence on raw hours: Q3 + 1.5 × IQR = 45 + 1.5 × 45 = 113 hours (4.7 days).</li>
+      <li><b>Other cutoffs.</b> A 7-day cap gives a pooled median of 0.58 hours, the 90th percentile 0.64 and the 95th percentile 1.07. The conclusion does not depend on the exact cutoff.</li>
+      <li><b>What trimming means.</b> The 120 trimmed deals are mostly booked or quoted customers who took longer. Trimming describes the typical lead and hides the slow quarter, which is why that quarter is shown separately.</li>
+      <li><b>Time to deal as a proxy.</b> A deal is created within a minute of the Customer change for 85% of leads that have both, so Customer is treated as assessment booked. It is not time to first contact.</li>
+      <li><b>Instant deals.</b> Many near-zero times are contacts created already booked. Excluding anything under 5 minutes, the trimmed Meta median is 8.3 hours.</li>
+      <li><b>Meta definition.</b> All 455 Paid Social leads count as Meta, including 116 flagged non-marketing in HubSpot, which is likely a tagging or cleanup effect (89 of them were created Jan to May). The agency's 467 matches Paid Social plus Organic Social plus Other Campaigns (455 + 6 + 6).</li>
+      <li><b>Cost.</b> $27K YTD spend assumed to be all Meta gives about $59 per lead, about $99 per booked assessment and about $191 per approved or invoiced lead.</li>
+      <li><b>Call data.</b> 66 contacts have a first-call date and 17 were created since March. 41 of the 66 had the call logged within a minute of creation, likely inbound calls that created the contact. For the 15 called within 7 days, the median is 1.5 hours, and the deal followed within 4 to 16 minutes in 6 of them. Too few to measure speed to contact.</li>
+      <li><b>Booking status.</b> Lead status is a snapshot. Cancelled assessments and declined quotes are not separate statuses, so the booking rate may be slightly low.</li>
+      <li><b>Sources.</b> 2026 Contacts export, Filtered Contacts 2 export and Jobber quotes export. 5 emails and 51 phone numbers are duplicated and were not de-duplicated.</li>
     </ul>
-  </div>
-  <div class="card">
-    <h3>Data notes</h3>
-    <ul class="plain">
-      <li>Lead status is a current snapshot. Cancelled assessments, declined quotes and OOT assessments do not appear as statuses, so the booking rate may be slightly low.</li>
-      <li>Time to deal depends on how and when deals were created in HubSpot. It matches the Customer timing for 603 of 707 leads that have both.</li>
-      <li>CPL assumes all $27K went to Meta. If some went to search, Meta CPL falls and the other numbers move slightly.</li>
-      <li>The marketing contact flag is not used to define Meta. All 455 Paid Social leads count as Meta, including 116 flagged non-marketing, which is likely a tagging or cleanup effect. 89 of those were created Jan to May.</li>
-      <li>5 emails and 51 phone numbers are duplicated across the 2026 contacts and were not de-duplicated.</li>
-    </ul>
-  </div>
+  </details>
 </section>
 </div>
 <div id="tip" role="tooltip"></div>
-
 <script>
 (function(){
 var tip=document.getElementById('tip');window.__bindTip=function(e,t){bindTip(e,t)};
@@ -354,9 +246,19 @@ hbars('c-source',[
 ],{max:100,fmt:function(v){return v.toFixed(0)+'%'},ref:73.2,refLabel:'73% all leads'});
 table('t-source',['Source','Leads','Booked','Rate'],[['Meta','455','272','59.8%'],['Offline','243','196','80.7%'],['Direct','173','153','88.4%'],['Organic search','60','53','88.3%'],['Paid search','30','26','86.7%'],['All leads','983','720','73.2%']]);
 
-var BM=[['Jan',28,12],['Feb',41,28],['Mar',38,25],['Apr',45,26],['May',46,18],['Jun',37,21],['Jul',101,82],['Aug',61,38],['Sep',52,21]];
-hbars('c-mkt',BM.map(function(m){var r=m[2]/m[1]*100;return {label:m[0],sub:m[1]+' leads',v:r,cls:'hi',tip:m[0]+': '+m[2]+' of '+m[1]+' booked'}}),{max:100,fmt:function(v){return v.toFixed(0)+'%'},ref:59.8,refLabel:'60% all Meta'});
-table('t-mkt',['Month','Meta leads','Booked','Rate'],BM.map(function(m){return [m[0],m[1],m[2],(m[2]/m[1]*100).toFixed(1)+'%']}));
+/* window test */
+hbars('c-window',[
+  {label:'Booking rate, weekday daytime',sub:'191 leads',v:59.7,cls:'hi',tip:'Weekday 7 AM to 6 PM: 59.7% booked'},
+  {label:'Booking rate, weekend or evening',sub:'264 leads',v:59.8,cls:'warn',tip:'Weekend or evening: 59.8% booked'}
+],{max:100,fmt:function(v){return v.toFixed(1)+'%'}});
+(function(){var h=document.getElementById('c-window');var d=document.createElement('div');d.style.marginTop='14px';h.appendChild(d);d.id='c-window-h';
+  hbars('c-window-h',[
+   {label:'Median hours to deal, weekday daytime',sub:'trimmed',v:0.6,cls:'hi',tip:'Weekday daytime median about 0.6 hours'},
+   {label:'Median hours to deal, weekend',sub:'trimmed',v:17.2,cls:'warn',tip:'Weekend median 17.2 hours'},
+   {label:'Median hours to deal, 6 to 9 PM',sub:'trimmed',v:14.2,cls:'warn',tip:'6 to 9 PM median 14.2 hours'}
+  ],{max:20,fmt:function(v){return v.toFixed(1)+' h'}});
+})();
+table('t-window',['Window','Meta leads','Booking rate','Median hours to deal'],[['Weekday 7 AM to 6 PM','191','59.7%','0.6'],['Weekend or evening','264','59.8%','14 to 17']]);
 
 /* histogram */
 var H=[['≤15m',49],['15–60m',21],['1–4h',19],['4–12h',19],['12–24h',22],['24–48h',28],['48–113h',17],['>113h',57]];
@@ -375,45 +277,6 @@ function placeFence(){var cols=hh.querySelectorAll('.hcol');var a=cols[6].getBou
 placeFence();window.addEventListener('resize',placeFence);if(window.ResizeObserver)new ResizeObserver(placeFence).observe(hh);
 table('t-hist',['Bucket','Meta deals','Treatment'],H.map(function(d,i){return [d[0],d[1],i===7?'Trimmed':'Kept']}));
 
-/* trim table */
-var T=[['Meta (paid social)','175 / 232',14.2,3.4,146.0,16.9,74,1],['Paid search','25 / 25',1.2,1.2,11.7,11.7,88],['Other direct and organic','199 / 228',1.8,1.1,77.0,12.5,84],['Offline','155 / 189',0.0,0.0,120.8,2.9,95],['All sources','554 / 674',1.5,0.5,110.6,11.2,84]];
-document.getElementById('trim-table').innerHTML='<tr><th>Source</th><th>Kept / total</th><th>Median before</th><th>Median after</th><th>Mean before</th><th>Mean after</th><th>Within 24h after</th></tr>'+T.map(function(r){return '<tr'+(r[7]?' class="emph"':'')+'><td>'+r[0]+'</td><td class="num">'+r[1]+'</td><td class="num">'+r[2].toFixed(1)+'</td><td class="num">'+r[3].toFixed(1)+'</td><td class="num">'+r[4].toFixed(1)+'</td><td class="num">'+r[5].toFixed(1)+'</td><td class="num">'+r[6]+'%</td></tr>'}).join('');
-document.getElementById('sens-table').innerHTML='<tr><th>Cutoff</th><th>Hours</th><th>Removed</th><th>Mean</th><th>Median</th></tr>'+[['Tukey fence (used)','113','120 (18%)','11.2','0.46'],['7 days','168','92 (14%)','17.2','0.58'],['90th percentile','250','68 (10%)','24.6','0.64'],['95th percentile','567','34 (5%)','42.9','1.07'],['No trimming','—','0','110.6','1.52']].map(function(r,i){return '<tr'+(i===0?' class="emph"':'')+'>'+r.map(function(c,j){return '<td class="'+(j?'num':'')+'">'+c+'</td>'}).join('')+'</tr>'}).join('');
-
-/* when */
-var W=[
- {label:'Weekday',sub:'n 121',v:1.4,cls:'hi',tip:'Weekday: median 1.4 h, 83% within 24 h'},
- {label:'Weekend',sub:'n 54',v:17.2,cls:'warn',tip:'Weekend: median 17.2 h, 56% within 24 h'},
- {label:'7–9 AM',sub:'n 23',v:0.5,cls:'hi',tip:'7 to 9 AM: median 0.5 h'},
- {label:'9 AM–6 PM',sub:'n 84',v:0.6,cls:'hi',tip:'9 AM to 6 PM: median 0.6 h'},
- {label:'6–9 PM',sub:'n 28',v:14.2,cls:'warn',tip:'6 to 9 PM: median 14.2 h'},
- {label:'9 PM–midnight',sub:'n 23',v:12.5,cls:'warn',tip:'9 PM to midnight: median 12.5 h'},
- {label:'Midnight–7 AM',sub:'n 17',v:8.5,cls:'warn',tip:'Midnight to 7 AM: median 8.5 h'}
-];
-hbars('c-when',W,{max:20,fmt:function(v){return v.toFixed(1)+' h'}});
-table('t-when',['Window','Meta deals','Median hours'],W.map(function(r){return [r.label,r.sub.replace('n ',''),r.v.toFixed(1)]}));
-
-var M=[['Mar',14,2.7],['Apr',20,0.9],['May',17,12.5],['Jun',16,9.1],['Jul',62,1.7],['Aug',27,4.4],['Sep',18,10.0]];
-hbars('c-month',M.map(function(m){return {label:m[0],sub:'n '+m[1],v:m[2],cls:m[2]>8?'warn':'hi',tip:m[0]+': median '+m[2]+' h, '+m[1]+' deals'}}),{max:14,fmt:function(v){return v.toFixed(1)+' h'}});
-table('t-month',['Month','Meta deals','Median hours'],M.map(function(m){return [m[0],m[1],m[2].toFixed(1)]}));
-
-/* calls dot strip (log scale) */
-var vals=[0.03,0.1,0.28,0.37,0.43,0.81,1.03,1.53,1.69,3.42,14.72,36.78,41.59,74.59,92.98];
-var W0=720,H0=150,L=16,R=16,lo=Math.log10(0.01),hi=Math.log10(200);
-function X(v){return L+(Math.log10(v)-lo)/(hi-lo)*(W0-L-R)}
-var svg='<svg viewBox="0 0 '+W0+' '+H0+'" width="100%" style="display:block;max-width:100%" xmlns="http://www.w3.org/2000/svg">';
-var ticks=[[0.0167,'1 min'],[0.25,'15 min'],[1,'1 h'],[4,'4 h'],[24,'1 day'],[168,'7 days']];
-svg+='<rect x="'+X(0.01)+'" y="14" width="'+(X(1)-X(0.01))+'" height="90" fill="var(--s1)" opacity="0.10"/>';
-ticks.forEach(function(t){svg+='<line x1="'+X(t[0])+'" x2="'+X(t[0])+'" y1="14" y2="104" stroke="var(--grid)" stroke-width="1"/><text x="'+X(t[0])+'" y="124" text-anchor="middle">'+t[1]+'</text>'});
-svg+='<line x1="'+L+'" x2="'+(W0-R)+'" y1="104" y2="104" stroke="var(--line)"/>';
-svg+='<line x1="'+X(1.53)+'" x2="'+X(1.53)+'" y1="10" y2="104" stroke="var(--ink2)" stroke-dasharray="4 3" stroke-width="1.5"/><text x="'+(X(1.53)+5)+'" y="22">median 1.5 h</text>';
-var placed=[];
-vals.forEach(function(v){var x=X(v),row=0;while(placed.some(function(p){return p.row===row&&Math.abs(p.x-x)<15}))row++;placed.push({x:x,row:row});
-  svg+='<circle cx="'+x+'" cy="'+(94-row*15)+'" r="6" fill="var(--s1)" stroke="var(--surface)" stroke-width="2" data-v="'+v+'"/>'});
-svg+='</svg>';
-var host=document.getElementById('c-calls');host.innerHTML=svg;
-host.querySelectorAll('circle').forEach(function(c){var v=+c.getAttribute('data-v');bindTip(c,'First call '+(v<1?Math.round(v*60)+' min':v.toFixed(1)+' h')+' after contact was created')});
-table('c-calls',['Rank','Hours to first call'],vals.map(function(v,i){return [i+1,v.toFixed(2)]}));
 })();
 
 /* revenue what-if */
