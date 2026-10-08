@@ -1,0 +1,201 @@
+<title>CSR Staffing Model</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* Layout: headline answer, scenario table, hourly staffing charts, sensitivity grids, then inputs and assumptions. */
+:root{
+  --bg:#f4f4f2; --surface:#fcfcfb; --ink:#0b0b0b; --ink2:#52514e; --ink3:#6f6e69;
+  --line:#e3e2de; --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --neutral:#b9b8b2; --tint:#eaf2fc;
+  --sans:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121211; --surface:#1a1a19; --ink:#ffffff; --ink2:#c3c2b7; --ink3:#9c9b92;
+    --line:#2e2e2b; --s1:#3987e5; --s2:#d95926; --s3:#199e70; --neutral:#5a5953; --tint:#18273a; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121211; --surface:#1a1a19; --ink:#ffffff; --ink2:#c3c2b7; --ink3:#9c9b92;
+  --line:#2e2e2b; --s1:#3987e5; --s2:#d95926; --s3:#199e70; --neutral:#5a5953; --tint:#18273a; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5;padding-inline:16px;padding-block:32px 64px}
+.wrap{max-width:1040px;margin-inline:auto;display:flex;flex-direction:column;gap:24px}
+h1,h2,h3{text-wrap:balance;margin:0;line-height:1.2}
+h1{font-size:clamp(26px,4.2vw,36px);font-weight:700;letter-spacing:-.01em}
+h3{font-size:15px;font-weight:600}
+p{margin:0}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);font-weight:600}
+.lede{color:var(--ink2);max-width:72ch;font-size:16px}
+header{display:flex;flex-direction:column;gap:10px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px;min-width:0;display:flex;flex-direction:column;gap:6px}
+.tile .k{font-size:12px;color:var(--ink3);letter-spacing:.04em;text-transform:uppercase;font-weight:600}
+.tile .v{font-family:var(--mono);font-size:30px;font-weight:600;letter-spacing:-.02em;line-height:1.1}
+.tile .v small{font-size:13px;color:var(--ink3);font-weight:400;margin-left:4px}
+.tile .d{font-size:13px;color:var(--ink2)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:18px;min-width:0;display:flex;flex-direction:column;gap:12px}
+.sub{font-size:13px;color:var(--ink2)}
+.take{font-size:14px;background:var(--tint);border-radius:4px;padding:10px 12px}
+.scroll{overflow-x:auto;min-width:0}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{text-align:right;padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+th{font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink3);font-weight:600}
+td.n{font-family:var(--mono)}
+tr.key td{font-weight:700;background:var(--tint)}
+.cols{display:flex;align-items:flex-end;gap:3px;height:120px;padding-top:16px;border-bottom:1px solid var(--line)}
+.col{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%}
+.col .bar{width:100%;border-radius:2px 2px 0 0;min-height:1px;background:var(--s1)}
+.col .n{font-family:var(--mono);font-size:10px;margin-bottom:2px}
+.labs{display:flex;gap:3px}.labs div{flex:1;text-align:center;font-size:10px;color:var(--ink3);font-family:var(--mono);padding-top:3px}
+.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px 16px}
+.field{display:flex;flex-direction:column;gap:3px;min-width:0}
+.field label{font-size:12px;color:var(--ink2)}
+.field input{font:inherit;font-family:var(--mono);font-size:13px;padding:7px 9px;border-radius:4px;border:1px solid var(--line);background:var(--surface);color:var(--ink);min-width:0;width:100%}
+.field input:focus-visible{outline:2px solid var(--s1);outline-offset:2px}
+.group{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);font-weight:700;grid-column:1/-1;padding-top:6px}
+ul.plain{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;color:var(--ink2);font-size:14px}
+ul.plain b{color:var(--ink)}
+.small{font-size:12px;color:var(--ink3)}
+button.reset{font:inherit;font-size:13px;padding:7px 12px;border-radius:4px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;align-self:flex-start}
+button.reset:focus-visible{outline:2px solid var(--s1);outline-offset:2px}
+</style>
+<div class="wrap">
+<header>
+  <div class="eyebrow">Preservan corporate · CSR capacity planning</div>
+  <h1>A fast first call is a coverage problem more than a volume problem.</h1>
+  <p class="lede">20 locations at 2 to 3 leads a day is 40 to 60 leads, about 7 to 11 hours of phone work. The staffing need comes from how many agents must be sitting ready at all hours so each lead is called within the target time. All inputs below are editable, and every figure is an assumption to test.</p>
+</header>
+
+<div class="tiles" id="tiles"></div>
+
+<div class="card">
+  <h3>Staffing by first-call target</h3>
+  <div class="sub" id="scn-sub"></div>
+  <div class="scroll"><table id="scn"></table></div>
+  <div class="take" id="take"></div>
+</div>
+
+<div class="grid" id="hourly"></div>
+
+<div class="card">
+  <h3>How staffing scales with locations and lead volume</h3>
+  <div class="sub">Full-time equivalents (CSRs only, before supervisors). Rows are locations, columns are leads per location per day.</div>
+  <div class="grid" id="sens"></div>
+</div>
+
+<div class="card">
+  <h3>Inputs</h3>
+  <div class="fields" id="fields"></div>
+  <button class="reset" id="reset" type="button">Reset to defaults</button>
+</div>
+
+<div class="card">
+  <h3>How the model works</h3>
+  <ul class="plain">
+    <li><b>Arrivals.</b> Leads per hour follow the time-of-day pattern of your 2026 in-territory leads. Leads that arrive outside coverage hours are called when the team opens, which creates a morning surge. A burst factor covers ad-driven spikes.</li>
+    <li><b>First call.</b> Each new lead needs an immediate call. Calls that connect take talk plus wrap-up time. Calls that do not connect take about 2 minutes for the dial, voicemail, text and log.</li>
+    <li><b>Queueing.</b> I used the Erlang C formula, the standard call-center method, to find the fewest agents per hour so that the chosen share of first calls (default 90%) starts within the target time. Callbacks from leads who missed a call share the same agents.</li>
+    <li><b>Follow-ups.</b> Leads not reached get follow-up attempts over the next days. These are not time-critical, so they fill idle time. If total workload divided by the occupancy cap is higher than the seats needed for speed, workload sets the staffing.</li>
+    <li><b>From seats to people.</b> Agent-hours per week divided by paid hours per FTE after shrinkage (breaks, PTO, training, meetings). Supervisors are added at the span of control you choose.</li>
+    <li><b>Connect rates.</b> I assumed faster calling connects more often (first attempt 40%, 35%, 28%) and each later attempt connects 15% of those remaining. That gives 56 to 63% of leads reached overall, close to the 52% of Meta leads reached today after a median of 8 touches.</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h3>Variables to add or check</h3>
+  <ul class="plain">
+    <li><b>Time zones.</b> If locations span Eastern to Pacific, 7 AM Eastern to 9 PM Pacific is 17 hours. Set coverage hours in Eastern time to match.</li>
+    <li><b>Seat floors.</b> One always-on seat for 15 hours, 7 days a week is about 3.75 FTE. At this volume the floor drives staffing for the slower targets.</li>
+    <li><b>Burst risk.</b> Ad pushes, promotions and weather events create spikes. Raise the burst factor if leads cluster.</li>
+    <li><b>Overnight leads.</b> About 15% of leads arrive between 10 PM and 7 AM. An automatic text with a booking link is a cheaper answer than overnight calling.</li>
+    <li><b>Dialer and tooling.</b> A power dialer, click-to-call from HubSpot and SMS automation cut unanswered-call time and cut the per-lead workload.</li>
+    <li><b>Attrition and ramp.</b> Remote CSR teams often turn over 30 to 50% a year. Plan for hiring 2 to 3 months ahead and for partial productivity while training.</li>
+    <li><b>Quality assurance.</b> Call review and coaching need time beyond supervisors. 1 supervisor per 10 to 12 agents is a common ratio.</li>
+    <li><b>Lead quality.</b> Misrouted, duplicate and spam leads still consume calls. The uplift input covers this. Fixing territory routing would lower it.</li>
+    <li><b>Local trust.</b> Local numbers, a local-sounding first text and a named local contact change connect and booking rates, not staffing.</li>
+  </ul>
+</div>
+</div>
+<script>
+(function(){
+var PROF=[0.0125, 0.0143, 0.0054, 0.0376, 0.0036, 0.0072, 0.0107, 0.034, 0.0555, 0.0984, 0.0805, 0.068, 0.0626, 0.0608, 0.0662, 0.0483, 0.0698, 0.0572, 0.034, 0.0429, 0.0411, 0.0286, 0.0411, 0.0197];
+var DEF={loc:20,lpd:2.5,extra:10,burst:1.25,open:7,close:22,talk:6,wrap:1,un:2,p1a:40,p1b:35,p1c:28,pf:15,nf:3,cb:25,shrink:30,target:90,occ:75,rate:14,srate:30,span:12};
+var FIELDS=[
+ ['g','Volume'],['loc','Locations'],['lpd','Leads per location per day'],['extra','Uplift for misrouted, duplicate or junk leads (%)'],['burst','Burst factor on hourly arrivals'],
+ ['g','Coverage (Eastern time, 24-hour clock)'],['open','Opens at'],['close','Closes at'],
+ ['g','Call handling'],['talk','Talk time on connected call (min)'],['wrap','Wrap-up and notes (min)'],['un','Unanswered attempt (min)'],['cb','Callbacks per lead (%)'],
+ ['g','Connect rates'],['p1a','First attempt connects, target under 1 min (%)'],['p1b','First attempt connects, target under 5 min (%)'],['p1c','First attempt connects, target under 30 min (%)'],['pf','Each follow-up attempt connects (%)'],['nf','Follow-up attempts'],
+ ['g','Staffing rules'],['target','Share of first calls on time (%)'],['occ','Occupancy cap (%)'],['shrink','Shrinkage (%)'],['span','Agents per supervisor'],
+ ['g','Cost'],['rate','CSR loaded cost per hour ($)'],['srate','Supervisor loaded cost per hour ($)']
+];
+var P={};function load(){for(var k in DEF)P[k]=DEF[k]}load();
+function erl(N,A,T,S){if(N<=A)return 0;var term=1,s=1;for(var k=1;k<N;k++){term*=A/k;s+=term}var tN=term*A/N,last=tN*N/(N-A),pw=last/(s+last);return 1-pw*Math.exp(-(N-A)*T/S)}
+function need(lam,S,T,t){var A=lam*S/60,N=Math.max(1,Math.floor(A)+1);while(erl(N,A,T,S)<t)N++;return N}
+function model(p,sla,p1){
+  var V=p.loc*p.lpd*(1+p.extra/100),AHT=p.talk+p.wrap,arr=[];
+  for(var h=0;h<24;h++)arr[h]=0;
+  for(h=0;h<24;h++){if(h>=p.open&&h<p.close)arr[h]+=PROF[h]*V;else arr[p.open]+=PROF[h]*V}
+  var s1=p1*AHT+(1-p1)*p.un,tot=0,peak=0,hours=[],cbr=p.cb/100,tg=p.target/100;
+  for(h=0;h<24;h++){
+    if(h<p.open||h>=p.close){hours.push(0);continue}
+    var lo=arr[h]*p.burst,li=lo*cbr,N=0;
+    if(lo+li>0){var S=(lo*s1+li*AHT)/(lo+li);N=need(lo+li,S,sla,tg)}else N=1;
+    hours.push(N);tot+=N;peak=Math.max(peak,N);
+  }
+  var w=p1*AHT+(1-p1)*p.un,pn=1-p1,pf=p.pf/100;
+  for(var i=0;i<p.nf;i++){w+=pn*(pf*AHT+(1-pf)*p.un);pn*=(1-pf)}
+  var work=V*(w+cbr*AHT)/60,req=Math.max(tot,work/(p.occ/100));
+  var fte=req*7/(40*(1-p.shrink/100)),sup=Math.ceil(fte/p.span),cost=(fte*p.rate+sup*p.srate)*2080;
+  return {V:V,peak:peak,work:work,tot:tot,req:req,fte:fte,sup:sup,cost:cost,cpl:cost/(V*365),contact:1-(1-p1)*Math.pow(1-pf,p.nf),occ:work/req,hours:hours};
+}
+var SC=[['Under 1 minute',1,'p1a'],['Under 5 minutes',5,'p1b'],['Under 30 minutes',30,'p1c']];
+function run(){return SC.map(function(s){return model(P,s[1],P[s[2]]/100)})}
+function f1(x){return (Math.round(x*10)/10).toFixed(1)}
+function usd(x){return '$'+Math.round(x/1000)+'K'}
+function render(){
+  var R=run();
+  document.getElementById('tiles').innerHTML=R.map(function(r,i){return '<div class="tile"><div class="k">First call '+SC[i][0].toLowerCase()+'</div><div class="v">'+f1(r.fte)+'<small>CSR FTE + '+r.sup+' supervisor</small></div><div class="d">Up to '+r.peak+' agents on shift at peak. About '+usd(r.cost)+' a year, or $'+f1(r.cpl)+' per lead.</div></div>'}).join('');
+  document.getElementById('scn-sub').textContent=Math.round(R[0].V)+' leads a day worked ('+P.loc+' locations × '+P.lpd+' leads, plus '+P.extra+'% uplift), coverage '+P.open+':00 to '+P.close+':00 Eastern, 7 days a week, '+P.target+'% of first calls on time.';
+  var rows=[
+   ['Expected share of leads reached',function(r){return Math.round(r.contact*100)+'%'}],
+   ['Phone workload (agent-hours a day)',function(r){return f1(r.work)}],
+   ['Seats needed to hit the call target (agent-hours a day)',function(r){return r.tot}],
+   ['Peak agents on shift',function(r){return r.peak}],
+   ['Average occupancy on scheduled hours',function(r){return Math.round(r.occ*100)+'%'}],
+   ['CSR FTE',function(r){return f1(r.fte)}],
+   ['Supervisors',function(r){return r.sup}],
+   ['Annual cost',function(r){return usd(r.cost)}],
+   ['Cost per lead',function(r){return '$'+f1(r.cpl)}]
+  ];
+  document.getElementById('scn').innerHTML='<tr><th>Metric</th>'+SC.map(function(s){return '<th>'+s[0]+'</th>'}).join('')+'</tr>'+rows.map(function(row,i){return '<tr'+(i===5?' class="key"':'')+'><td>'+row[0]+'</td>'+R.map(function(r){return '<td class="n">'+row[1](r)+'</td>'}).join('')+'</tr>'}).join('');
+  var floor=Math.max(1,P.close-P.open)*7/(40*(1-P.shrink/100));
+  document.getElementById('take').textContent='The workload is only '+f1(R[0].work)+' hours of calling a day, but one seat staffed '+(P.close-P.open)+' hours a day for 7 days takes '+f1(floor)+' FTE by itself. Tighter targets need 2 to '+R[0].peak+' agents ready at once, so speed adds '+f1(R[0].fte-R[2].fte)+' FTE (about '+usd(R[0].cost-R[2].cost)+' a year) over a 30-minute target.';
+  var hh='';
+  R.forEach(function(r,i){
+    var mx=Math.max.apply(null,r.hours.concat([1]));var cols='',labs='';
+    for(var h=P.open;h<P.close;h++){var n=r.hours[h];cols+='<div class="col"><div class="n">'+n+'</div><div class="bar" style="height:'+(n/mx*80)+'px" title="'+h+':00 '+n+' agents"></div></div>';labs+='<div>'+h+'</div>'}
+    hh+='<div class="card"><h3>Agents on shift by hour, '+SC[i][0].toLowerCase()+'</h3><div class="sub">Eastern time. Peak '+r.peak+'.</div><div class="cols">'+cols+'</div><div class="labs">'+labs+'</div></div>';
+  });
+  document.getElementById('hourly').innerHTML=hh;
+  var locs=[20,30,40],lpds=[2,2.5,3],sh='';
+  SC.forEach(function(s,i){
+    var t='<div class="scroll"><table><tr><th>'+s[0]+'</th>'+lpds.map(function(l){return '<th>'+l+'</th>'}).join('')+'</tr>';
+    locs.forEach(function(L){t+='<tr><td>'+L+' locations</td>'+lpds.map(function(l){var q={};for(var k in P)q[k]=P[k];q.loc=L;q.lpd=l;return '<td class="n">'+f1(model(q,s[1],P[s[2]]/100).fte)+'</td>'}).join('')+'</tr>'});
+    sh+='<div>'+t+'</table></div></div>';
+  });
+  document.getElementById('sens').innerHTML=sh;
+}
+var fh='';
+FIELDS.forEach(function(f){if(f[0]==='g')fh+='<div class="group">'+f[1]+'</div>';else fh+='<div class="field"><label for="in-'+f[0]+'">'+f[1]+'</label><input id="in-'+f[0]+'" type="number" step="any" value="'+DEF[f[0]]+'"></div>'});
+document.getElementById('fields').innerHTML=fh;
+FIELDS.forEach(function(f){if(f[0]==='g')return;document.getElementById('in-'+f[0]).addEventListener('input',function(e){var v=parseFloat(e.target.value);if(!isNaN(v)){P[f[0]]=v;if(P.close<=P.open){P.close=P.open+1}render()}})});
+document.getElementById('reset').addEventListener('click',function(){load();FIELDS.forEach(function(f){if(f[0]!=='g')document.getElementById('in-'+f[0]).value=DEF[f[0]]});render()});
+window.__model=model;
+render();
+})();
+</script>
