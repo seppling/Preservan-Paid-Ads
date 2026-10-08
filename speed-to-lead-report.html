@@ -70,6 +70,7 @@ th,td{text-align:right;padding:8px 10px;border-bottom:1px solid var(--line);whit
 th:first-child,td:first-child{text-align:left}
 th{font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink3);font-weight:600}
 td.num,td .mono{font-family:var(--mono)}
+table.wrap td{white-space:normal}
 tr.emph td{background:var(--tint);font-weight:600}
 .scroll{overflow-x:auto;min-width:0}
 details{font-size:13px;color:var(--ink2)}
@@ -99,7 +100,7 @@ svg text{fill:var(--ink2);font-family:var(--mono);font-size:11px}
   <div class="eyebrow">Preservan · Lead qualification and booking · 2026 YTD</div>
   <h1>Booked leads are healthy overall. Meta leads arrive slower and book less.</h1>
   <p class="lede">983 contacts created Jan 1 to Oct 7, 2026, from HubSpot exports. "Customer" is treated as assessment booked, because a deal is created within a minute of the customer change for 85% of leads that have both.</p>
-  <div class="meta">Sources: 2026 Contacts export, Filtered Contacts 2 export · $27K YTD ad spend assumed to be Meta</div>
+  <div class="meta">Sources: 2026 Contacts export, Filtered Contacts 2 export, Jobber quotes export · $27K YTD ad spend assumed to be Meta</div>
 </header>
 
 <div class="tiles">
@@ -186,6 +187,68 @@ svg text{fill:var(--ink2);font-family:var(--mono);font-size:11px}
 </section>
 
 <section>
+  <div><div class="eyebrow">Part 4</div><h2>What a lift in Meta bookings could be worth</h2></div>
+  <div class="lede">A what-if for the case where slow intake is the main reason Meta books less. Earlier testing found no booking-rate difference between fast and slow response windows, so treat this as upside, not a forecast.</div>
+  <div class="card">
+    <div style="display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center">
+      <label class="small" for="lift-mode">Lift means</label>
+      <select id="lift-mode" style="font:inherit;font-size:13px;padding:6px 8px;border-radius:4px;border:1px solid var(--line);background:var(--surface);color:var(--ink)">
+        <option value="pp">Percentage points (60% to 65%, 70%, 75%)</option>
+        <option value="rel">Relative (60% times 1.05, 1.10, 1.15)</option>
+      </select>
+      <label class="small" for="rev-period">Show</label>
+      <select id="rev-period" style="font:inherit;font-size:13px;padding:6px 8px;border-radius:4px;border:1px solid var(--line);background:var(--surface);color:var(--ink)">
+        <option value="ytd">Year to date (Jan 1 to Oct 7)</option>
+        <option value="ann">Annualized (YTD × 1.30)</option>
+      </select>
+    </div>
+    <div class="scroll"><table id="rev-table"></table></div>
+    <div id="rev-bars" role="img" aria-label="Revenue upside by scenario"></div>
+    <div class="legend"><span><i style="background:var(--s1)"></i>Quote-confirmed close rate (18%)</span><span><i style="background:var(--neutral)"></i>HubSpot-status close rate (52%)</span></div>
+    <div class="take" id="rev-take"></div>
+  </div>
+  <div class="grid">
+    <div class="card">
+      <h3>Inputs used</h3>
+      <div class="scroll"><table class="wrap">
+        <tr><th>Input</th><th>Value</th></tr>
+        <tr><td>Meta leads, 2026 YTD</td><td class="num">455</td></tr>
+        <tr><td>Meta booked now</td><td class="num">272 (59.8%)</td></tr>
+        <tr><td>Average Meta ticket (converted quotes, n 50)</td><td class="num">$1,427</td></tr>
+        <tr><td>Median Meta ticket</td><td class="num">$1,125</td></tr>
+        <tr><td>Meta booked leads with a converted quote</td><td class="num">50 of 272 (18.4%)</td></tr>
+        <tr><td>Meta booked leads in an approved or invoiced status</td><td class="num">141 of 272 (51.8%)</td></tr>
+        <tr><td>Converted Meta quote revenue to date</td><td class="num">$71,336</td></tr>
+      </table></div>
+      <div class="small">Revenue per extra booking is about $262 at the quote-confirmed rate, $740 at the HubSpot-status rate and $1,427 if every booking closes.</div>
+    </div>
+    <div class="card">
+      <h3>Ticket size by source</h3>
+      <div class="sub">Converted quotes linked to 2026 contacts. Average and median in dollars.</div>
+      <div class="scroll"><table>
+        <tr><th>Source</th><th>Quotes</th><th>Average</th><th>Median</th></tr>
+        <tr class="emph"><td>Meta</td><td class="num">50</td><td class="num">$1,427</td><td class="num">$1,125</td></tr>
+        <tr><td>Direct</td><td class="num">17</td><td class="num">$2,050</td><td class="num">$2,400</td></tr>
+        <tr><td>Organic search</td><td class="num">10</td><td class="num">$1,998</td><td class="num">$2,018</td></tr>
+        <tr><td>Offline</td><td class="num">56</td><td class="num">$1,919</td><td class="num">$890</td></tr>
+        <tr><td>All 2026 contacts</td><td class="num">140</td><td class="num">$1,754</td><td class="num">$1,283</td></tr>
+        <tr><td>All quotes since Jul 2024</td><td class="num">391</td><td class="num">$2,117</td><td class="num">$1,438</td></tr>
+      </table></div>
+      <div class="small">Meta jobs run about 20% smaller than the 2026 average. Company-wide tickets are skewed by a few large jobs. Without quotes over $5,354 (Tukey fence), the all-time average is $1,599.</div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>What to check before relying on this</h3>
+    <ul class="plain">
+      <li><b>HubSpot and Jobber disagree.</b> 429 contacts sit in New Approved Quote in HubSpot, but only 140 quotes linked to 2026 contacts are Converted in Jobber. Only 12% of the New Approved Quote contacts have a converted Jobber quote. The two close rates above bracket this. Find out what New Approved Quote means.</li>
+      <li><b>Matching is partial.</b> Quotes were linked to contacts by email, then phone, then name. 43 of the 281 quotes sent in 2026 could not be linked, many with no email, so the quote-confirmed rate is a floor.</li>
+      <li><b>Open quotes.</b> 61 quotes are awaiting response, 28 of them for Meta contacts, so realized revenue will rise a little.</li>
+      <li><b>Revenue, not profit.</b> This is quoted job value before costs, and extra Meta bookings may close at a different rate than today's.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
   <div><div class="eyebrow">Method</div><h2>Methodology and data trimming</h2></div>
   <div class="steps">
     <div class="step"><div class="n">983</div><div class="t">Contacts created in 2026</div></div>
@@ -250,7 +313,7 @@ svg text{fill:var(--ink2);font-family:var(--mono);font-size:11px}
 
 <script>
 (function(){
-var tip=document.getElementById('tip');
+var tip=document.getElementById('tip');window.__bindTip=function(e,t){bindTip(e,t)};
 function showTip(e,t){tip.textContent=t;tip.style.opacity=1;var x=Math.min(e.clientX+12,window.innerWidth-250);tip.style.left=Math.max(8,x)+'px';tip.style.top=(e.clientY+14)+'px'}
 function hideTip(){tip.style.opacity=0}
 function bindTip(el,t){
@@ -353,5 +416,38 @@ svg+='</svg>';
 var host=document.getElementById('c-calls');host.innerHTML=svg;
 host.querySelectorAll('circle').forEach(function(c){var v=+c.getAttribute('data-v');bindTip(c,'First call '+(v<1?Math.round(v*60)+' min':v.toFixed(1)+' h')+' after contact was created')});
 table('c-calls',['Rank','Hours to first call'],vals.map(function(v,i){return [i+1,v.toFixed(2)]}));
+})();
+
+/* revenue what-if */
+(function(){
+  var LEADS=455,BASE=272/455,TICKET=1427,CLOSE_Q=50/272,CLOSE_H=141/272,ANN=365/280;
+  var steps=[5,10,15];
+  function money(v){return v>=1000?'$'+(v/1000).toFixed(1)+'K':'$'+Math.round(v)}
+  function render(){
+    var mode=document.getElementById('lift-mode').value,per=document.getElementById('rev-period').value,k=per==='ann'?ANN:1;
+    var rows=steps.map(function(st){
+      var pp=mode==='pp'?st:BASE*100*st/100;
+      var extra=LEADS*pp/100*k, newRate=BASE*100+pp;
+      return {st:st,pp:pp,newRate:newRate,extra:extra,q:extra*CLOSE_Q*TICKET,h:extra*CLOSE_H*TICKET,c:extra*TICKET};
+    });
+    var t=document.getElementById('rev-table');
+    t.innerHTML='<tr><th>Lift</th><th>Meta booking rate</th><th>Extra bookings</th><th>Quote-confirmed close</th><th>HubSpot-status close</th><th>Every booking closes</th></tr>'+rows.map(function(r){return '<tr><td>+'+r.st+(mode==='pp'?' pts':'%')+'</td><td class="num">'+r.newRate.toFixed(1)+'%</td><td class="num">'+Math.round(r.extra)+'</td><td class="num">'+money(r.q)+'</td><td class="num">'+money(r.h)+'</td><td class="num">'+money(r.c)+'</td></tr>'}).join('');
+    var host=document.getElementById('rev-bars');host.innerHTML='';host.style.display='flex';host.style.flexDirection='column';host.style.gap='10px';
+    var mx=Math.max.apply(null,rows.map(function(r){return r.h}))*1.05;
+    rows.forEach(function(r){
+      [['q','Quote-confirmed','hi',r.q],['h','HubSpot-status','',r.h]].forEach(function(x,i){
+        var row=document.createElement('div');row.className='row';
+        row.innerHTML='<div class="lab"><b>'+(i===0?'+'+r.st+(mode==='pp'?' pts':'%'):'')+'</b><span>'+(i===0?'quote-confirmed':'HubSpot status')+'</span></div><div class="track"></div>';
+        var tr=row.querySelector('.track');var b=document.createElement('div');b.className='bar '+x[2];b.style.width=(x[3]/mx*100)+'%';
+        var v=document.createElement('div');v.className='val';v.style.left=(x[3]/mx*100)+'%';v.textContent=money(x[3]);
+        tr.appendChild(b);tr.appendChild(v);window.__bindTip(b,x[1]+': '+money(x[3])+' from about '+Math.round(r.extra)+' extra bookings');host.appendChild(row);
+      });
+    });
+    var top=rows[1];
+    document.getElementById('rev-take').textContent='A 10 '+(mode==='pp'?'point':'percent')+' lift adds about '+Math.round(top.extra)+' bookings and roughly '+money(top.q)+' to '+money(top.h)+' of quoted work '+(per==='ann'?'a year':'year to date')+', depending on which close rate is right. That compares with about $27K of ad spend to date.';
+  }
+  document.getElementById('lift-mode').addEventListener('change',render);
+  document.getElementById('rev-period').addEventListener('change',render);
+  render();
 })();
 </script>
