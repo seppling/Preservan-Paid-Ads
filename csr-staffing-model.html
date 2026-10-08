@@ -68,7 +68,7 @@ button.reset:focus-visible{outline:2px solid var(--s1);outline-offset:2px}
 <header>
   <div class="eyebrow">Preservan corporate · CSR capacity planning</div>
   <h1>A fast first call is a coverage problem more than a volume problem.</h1>
-  <p class="lede">20 locations at 2 to 3 leads a day is 40 to 60 leads, about 7 to 11 hours of phone work. The staffing need comes from how many agents must be sitting ready at all hours so each lead is called within the target time. All inputs below are editable, and every figure is an assumption to test.</p>
+  <p class="lede">Item 19 of the 2026 FDD shows 2.75 to 3.7 leads a day per outlet in 2025, so 20 locations is about 65 leads a day and 9 to 12 hours of phone work. The staffing need comes from how many agents must be sitting ready at all hours so each lead is called within the target time. All inputs are editable, and connect rates and call times are my assumptions.</p>
 </header>
 
 <div class="tiles" id="tiles"></div>
@@ -82,10 +82,26 @@ button.reset:focus-visible{outline:2px solid var(--s1);outline-offset:2px}
 
 <div class="card">
   <h3>Do contact center fees cover it?</h3>
-  <div class="sub">Fees per location are the monthly fee plus the per-job fee on invoiced jobs. Jobs per location are gross revenue divided by average ticket, because the franchise disclosure document (FDD) does not report job counts.</div>
+  <div class="sub">Contact center fees per location are $350 a month plus $35 per invoiced job (FDD Item 6, current). Jobs are Item 19 service visits, which match invoiced jobs closely: gross sales divided by visits reproduces reported averages.</div>
   <div class="scroll"><table id="fees"></table></div>
   <div class="take" id="fee-take"></div>
-  <div class="small">Revenue basis: Item 19 of the 2025 FDD, as reported by <a href="https://1851franchise.com/franchise-deep-dive-preservan-franchise-costs-fees-profit-and-data-2724793" target="_blank" rel="noopener">1851 Franchise</a>, for outlets open all of 2023 and 2024. Franchised Tulsa $137,427 and Orlando $406,300 (average $271,864). Company-owned Oklahoma City $401,054. Job counts and ticket are not disclosed. Contact center fee in those years was $3,600 a year. Today it is $350 a month plus $35 per invoiced job, per the same source.</div>
+  <div class="small">The FDD shows contact center per-invoice charges were lower in 2025 ($5,670 for Oklahoma City, $8,850 for Orlando, $4,320 for Dallas) because the fee was phased in and adjusted that year. The table uses the full current rate on a full year of jobs.</div>
+</div>
+
+<div class="card">
+  <h3>What Item 19 reports</h3>
+  <div class="sub">Figures from the FDD pages you shared. Gross sales per outlet, with jobs, leads and marketing where disclosed.</div>
+  <div class="scroll"><table>
+    <tr><th>Outlet and year</th><th>Gross sales</th><th>Service visits</th><th>Per visit</th><th>Leads</th><th>Leads a day</th><th>Marketing</th><th>Cost per lead</th><th>Visits per lead</th></tr>
+    <tr><td>Oklahoma City 2023 (company)</td><td class="n">$334,414</td><td class="n">185</td><td class="n">$1,808</td><td class="n">441</td><td class="n">1.2</td><td class="n">$20,166</td><td class="n">$45.72</td><td class="n">42%</td></tr>
+    <tr><td>Oklahoma City 2024 (company)</td><td class="n">$401,054</td><td class="n">173</td><td class="n">$2,354</td><td class="n">798</td><td class="n">2.2</td><td class="n">$35,552</td><td class="n">$44.55</td><td class="n">22%</td></tr>
+    <tr><td>Oklahoma City 2025 (company)</td><td class="n">$402,069</td><td class="n">188</td><td class="n">$2,098</td><td class="n">1,005</td><td class="n">2.8</td><td class="n">$54,184</td><td class="n">$53.92</td><td class="n">19%</td></tr>
+    <tr><td>Orlando 2024 (franchised)</td><td class="n">$406,300</td><td class="n">289</td><td class="n">$1,402</td><td class="n">1,056</td><td class="n">2.9</td><td class="n">$43,446</td><td class="n">$41.14</td><td class="n">27%</td></tr>
+    <tr><td>Orlando 2025 (franchised)</td><td class="n">$487,764</td><td class="n">291</td><td class="n">$1,640</td><td class="n">1,358</td><td class="n">3.7</td><td class="n">$105,109</td><td class="n">$77.40</td><td class="n">21%</td></tr>
+    <tr><td>Dallas 2025 (franchised)</td><td class="n">$612,000</td><td class="n">n/a</td><td class="n">n/a</td><td class="n">n/a</td><td class="n">n/a</td><td class="n">$75,637</td><td class="n">n/a</td><td class="n">n/a</td></tr>
+    <tr class="key"><td>2025 average, all three</td><td class="n">$500,611</td><td class="n">240 (two outlets)</td><td class="n">$1,858</td><td class="n">1,182</td><td class="n">3.2</td><td class="n">$78,310</td><td class="n">$65.66</td><td class="n">20%</td></tr>
+  </table></div>
+  <div class="small">Tulsa (franchised, 2024) disclosed $137,427 in gross sales in an earlier summary. The Dallas table for service visits and leads was not in the pages I received. The average ticket is gross sales divided by service visits for Oklahoma City and Orlando combined. Marketing spend in 2025 averages about $215 a day, against $100 a day in 2024 for Oklahoma City and $119 for Orlando.</div>
 </div>
 
 <div class="grid" id="hourly"></div>
@@ -105,6 +121,7 @@ button.reset:focus-visible{outline:2px solid var(--s1);outline-offset:2px}
 <div class="card">
   <h3>How the model works</h3>
   <ul class="plain">
+    <li><b>Lead volume.</b> Item 19 shows leads per day per outlet of 2.2 (Oklahoma City 2024), 2.8 (Oklahoma City 2025), 2.9 (Orlando 2024) and 3.7 (Orlando 2025). The model starts at 3.2, the 2025 average, and about 20% of leads become service visits.</li>
     <li><b>Arrivals.</b> Leads per hour follow the time-of-day pattern of your 2026 in-territory leads. Leads that arrive outside coverage hours are called when the team opens, which creates a morning surge. A burst factor covers ad-driven spikes.</li>
     <li><b>First call.</b> Each new lead needs an immediate call. Calls that connect take talk plus wrap-up time. Calls that do not connect take about 2 minutes for the dial, voicemail, text and log.</li>
     <li><b>Queueing.</b> I used the Erlang C formula, the standard call-center method, to find the fewest agents per hour so that the chosen share of first calls (default 90%) starts within the target time. Callbacks from leads who missed a call share the same agents.</li>
@@ -132,7 +149,7 @@ button.reset:focus-visible{outline:2px solid var(--s1);outline-offset:2px}
 <script>
 (function(){
 var PROF=[0.0125, 0.0143, 0.0054, 0.0376, 0.0036, 0.0072, 0.0107, 0.034, 0.0555, 0.0984, 0.0805, 0.068, 0.0626, 0.0608, 0.0662, 0.0483, 0.0698, 0.0572, 0.034, 0.0429, 0.0411, 0.0286, 0.0411, 0.0197];
-var DEF={loc:20,lpd:2.5,extra:10,burst:1.25,open:7,close:22,talk:6,wrap:1,un:2,p1a:40,p1b:35,p1c:28,pf:15,nf:3,cb:25,shrink:30,target:90,occ:75,rate:14,srate:30,span:12,rev:271864,tick:1700,mfee:350,jfee:35};
+var DEF={loc:20,lpd:3.2,extra:10,burst:1.25,open:7,close:22,talk:6,wrap:1,un:2,p1a:40,p1b:35,p1c:28,pf:15,nf:3,cb:25,shrink:30,target:90,occ:75,rate:14,srate:30,span:12,jobs:240,tick:1858,mfee:350,jfee:35,bf:1,tech:500};
 var FIELDS=[
  ['g','Volume'],['loc','Locations'],['lpd','Leads per location per day'],['extra','Uplift for misrouted, duplicate or junk leads (%)'],['burst','Burst factor on hourly arrivals'],
  ['g','Coverage (Eastern time, 24-hour clock)'],['open','Opens at'],['close','Closes at'],
@@ -140,7 +157,7 @@ var FIELDS=[
  ['g','Connect rates'],['p1a','First attempt connects, target under 1 min (%)'],['p1b','First attempt connects, target under 5 min (%)'],['p1c','First attempt connects, target under 30 min (%)'],['pf','Each follow-up attempt connects (%)'],['nf','Follow-up attempts'],
  ['g','Staffing rules'],['target','Share of first calls on time (%)'],['occ','Occupancy cap (%)'],['shrink','Shrinkage (%)'],['span','Agents per supervisor'],
  ['g','Cost'],['rate','CSR loaded cost per hour ($)'],['srate','Supervisor loaded cost per hour ($)'],
- ['g','Fees and revenue per location'],['rev','Gross revenue per location per year ($)'],['tick','Average ticket per invoiced job ($)'],['mfee','Contact center fee per month ($)'],['jfee','Contact center fee per invoiced job ($)']
+ ['g','Fees and revenue per location'],['jobs','Invoiced jobs (service visits) per location per year'],['tick','Average gross sales per job ($)'],['mfee','Contact center fee per month ($)'],['jfee','Contact center fee per invoiced job ($)'],['bf','Brand development fund (% of gross sales)'],['tech','Technology fee ceiling per month, not assessed today ($)']
 ];
 var P={};function load(){for(var k in DEF)P[k]=DEF[k]}load();
 function erl(N,A,T,S){if(N<=A)return 0;var term=1,s=1;for(var k=1;k<N;k++){term*=A/k;s+=term}var tN=term*A/N,last=tN*N/(N-A),pw=last/(s+last);return 1-pw*Math.exp(-(N-A)*T/S)}
@@ -184,20 +201,24 @@ function render(){
   document.getElementById('scn').innerHTML='<tr><th>Metric</th>'+SC.map(function(s){return '<th>'+s[0]+'</th>'}).join('')+'</tr>'+rows.map(function(row,i){return '<tr'+(i===5?' class="key"':'')+'><td>'+row[0]+'</td>'+R.map(function(r){return '<td class="n">'+row[1](r)+'</td>'}).join('')+'</tr>'}).join('');
   var floor=Math.max(1,P.close-P.open)*7/(40*(1-P.shrink/100));
   document.getElementById('take').textContent='The workload is only '+f1(R[0].work)+' hours of calling a day, but one seat staffed '+(P.close-P.open)+' hours a day for 7 days takes '+f1(floor)+' FTE by itself. Tighter targets need 2 to '+R[0].peak+' agents ready at once, so speed adds '+f1(R[0].fte-R[2].fte)+' FTE (about '+usd(R[0].cost-R[2].cost)+' a year) over a 30-minute target.';
-  var jobs=P.rev/P.tick,feeLoc=12*P.mfee+P.jfee*jobs;
+  var jobs=P.jobs,feeLoc=12*P.mfee+P.jfee*jobs,revLoc=jobs*P.tick,bfLoc=revLoc*P.bf/100;
   var ft='<tr><th>Metric</th>'+SC.map(function(s){return '<th>'+s[0]+'</th>'}).join('')+'</tr>';
+  function money0(x){return (x<0?'-$':'$')+Math.abs(Math.round(x)).toLocaleString()}
   var frows=[
-   ['Jobs per location per year',function(r){return Math.round(jobs)}],
-   ['Fees per location per year',function(r){return '$'+Math.round(feeLoc).toLocaleString()}],
-   ['Fees, all locations',function(r){return usd(feeLoc*P.loc)}],
+   ['Jobs per location per year (revenue about '+usd(revLoc)+')',function(r){return Math.round(jobs)}],
+   ['Contact center fees per location per year',function(r){return money0(feeLoc)}],
+   ['Contact center fees, all locations',function(r){return usd(feeLoc*P.loc)}],
    ['CSR program cost',function(r){return usd(r.cost)}],
-   ['Share of cost covered by fees',function(r){return Math.round(feeLoc*P.loc/r.cost*100)+'%'}],
-   ['Gap per location per year',function(r){var g=(r.cost-feeLoc*P.loc)/P.loc;return (g>0?'$':'-$')+Math.abs(Math.round(g)).toLocaleString()}],
-   ['Per-job fee needed to break even',function(r){return '$'+Math.round((r.cost/P.loc-12*P.mfee)/jobs)}]
+   ['Share of cost covered by contact center fees',function(r){return Math.round(feeLoc*P.loc/r.cost*100)+'%'}],
+   ['Gap per location per year (negative means surplus)',function(r){return money0((r.cost-feeLoc*P.loc)/P.loc)}],
+   ['Per-job fee needed to break even',function(r){return '$'+Math.round((r.cost/P.loc-12*P.mfee)/jobs)}],
+   ['Monthly fee needed to break even at the current per-job fee',function(r){return '$'+Math.round((r.cost/P.loc-P.jfee*jobs)/12)}],
+   ['Coverage if the brand fund (1% of sales) also paid for CSRs',function(r){return Math.round((feeLoc+bfLoc)*P.loc/r.cost*100)+'%'}]
   ];
   ft+=frows.map(function(row,i){return '<tr'+(i===4?' class="key"':'')+'><td>'+row[0]+'</td>'+R.map(function(r){return '<td class="n">'+row[1](r)+'</td>'}).join('')+'</tr>'}).join('');
   document.getElementById('fees').innerHTML=ft;
-  document.getElementById('fee-take').textContent='At about '+Math.round(jobs)+' jobs per location, fees of '+usd(feeLoc*P.loc)+' cover '+Math.round(feeLoc*P.loc/R[0].cost*100)+'% of a 1-minute program, '+Math.round(feeLoc*P.loc/R[1].cost*100)+'% of a 5-minute program and '+Math.round(feeLoc*P.loc/R[2].cost*100)+'% of a 30-minute program. The program cost covers calling only, so real cost is higher.';
+  var gap1=(R[0].cost-feeLoc*P.loc)/P.loc/12;
+  document.getElementById('fee-take').textContent='At about '+Math.round(jobs)+' jobs per location, contact center fees of '+usd(feeLoc*P.loc)+' cover '+Math.round(feeLoc*P.loc/R[0].cost*100)+'% of a 1-minute program, '+Math.round(feeLoc*P.loc/R[1].cost*100)+'% of a 5-minute program and '+Math.round(feeLoc*P.loc/R[2].cost*100)+'% of a 30-minute program. '+(gap1>0?'The 1-minute gap is about $'+Math.round(gap1)+' a month per location, '+(gap1<=P.tech?'which fits inside the technology fee ceiling of $'+P.tech+' a month, currently not assessed.':'which is more than the technology fee ceiling of $'+P.tech+' a month.'):'The 1-minute program is fully covered.')+' The program cost covers calling only, so real cost is higher.';
   var hh='';
   R.forEach(function(r,i){
     var mx=Math.max.apply(null,r.hours.concat([1]));var cols='',labs='';
@@ -205,7 +226,7 @@ function render(){
     hh+='<div class="card"><h3>Agents on shift by hour, '+SC[i][0].toLowerCase()+'</h3><div class="sub">Eastern time. Peak '+r.peak+'.</div><div class="cols">'+cols+'</div><div class="labs">'+labs+'</div></div>';
   });
   document.getElementById('hourly').innerHTML=hh;
-  var locs=[20,30,40],lpds=[2,2.5,3],sh='';
+  var locs=[20,30,40],lpds=[2.2,2.75,3.2,3.7],sh='';
   SC.forEach(function(s,i){
     var t='<div class="scroll"><table><tr><th>'+s[0]+'</th>'+lpds.map(function(l){return '<th>'+l+'</th>'}).join('')+'</tr>';
     locs.forEach(function(L){t+='<tr><td>'+L+' locations</td>'+lpds.map(function(l){var q={};for(var k in P)q[k]=P[k];q.loc=L;q.lpd=l;return '<td class="n">'+f1(model(q,s[1],P[s[2]]/100).fte)+'</td>'}).join('')+'</tr>'});
