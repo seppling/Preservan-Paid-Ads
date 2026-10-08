@@ -204,7 +204,7 @@ svg text{fill:var(--ink2);font-family:var(--mono);font-size:11px}
     </div>
     <div class="scroll"><table id="rev-table"></table></div>
     <div id="rev-bars" role="img" aria-label="Revenue upside by scenario"></div>
-    <div class="legend"><span><i style="background:var(--s1)"></i>Quote-confirmed close rate (18%)</span><span><i style="background:var(--neutral)"></i>HubSpot-status close rate (52%)</span></div>
+    <div class="legend"><span><i style="background:var(--s1)"></i>Extra booked assessments closing at the HubSpot rate (52%) and the $1,427 Meta ticket</span></div>
     <div class="take" id="rev-take"></div>
   </div>
   <div class="grid">
@@ -216,11 +216,10 @@ svg text{fill:var(--ink2);font-family:var(--mono);font-size:11px}
         <tr><td>Meta booked now</td><td class="num">272 (59.8%)</td></tr>
         <tr><td>Average Meta ticket (converted quotes, n 50)</td><td class="num">$1,427</td></tr>
         <tr><td>Median Meta ticket</td><td class="num">$1,125</td></tr>
-        <tr><td>Meta booked leads with a converted quote</td><td class="num">50 of 272 (18.4%)</td></tr>
         <tr><td>Meta booked leads in an approved or invoiced status</td><td class="num">141 of 272 (51.8%)</td></tr>
-        <tr><td>Converted Meta quote revenue to date</td><td class="num">$71,336</td></tr>
+        <tr><td>Revenue per extra booking</td><td class="num">$740</td></tr>
       </table></div>
-      <div class="small">Revenue per extra booking is about $262 at the quote-confirmed rate, $740 at the HubSpot-status rate and $1,427 if every booking closes.</div>
+      <div class="small">Close rate is the share of today's Meta bookings in New Approved Quote or Invoice Sent in HubSpot. The ticket is the average converted Meta quote in Jobber.</div>
     </div>
     <div class="card">
       <h3>Ticket size by source</h3>
@@ -240,9 +239,8 @@ svg text{fill:var(--ink2);font-family:var(--mono);font-size:11px}
   <div class="card">
     <h3>What to check before relying on this</h3>
     <ul class="plain">
-      <li><b>HubSpot and Jobber disagree.</b> 429 contacts sit in New Approved Quote in HubSpot, but only 140 quotes linked to 2026 contacts are Converted in Jobber. Only 12% of the New Approved Quote contacts have a converted Jobber quote. The two close rates above bracket this. Find out what New Approved Quote means.</li>
-      <li><b>Matching is partial.</b> Quotes were linked to contacts by email, then phone, then name. 43 of the 281 quotes sent in 2026 could not be linked, many with no email, so the quote-confirmed rate is a floor.</li>
-      <li><b>Open quotes.</b> 61 quotes are awaiting response, 28 of them for Meta contacts, so realized revenue will rise a little.</li>
+      <li><b>Close rate comes from HubSpot status.</b> It treats New Approved Quote and Invoice Sent as wins. Jobber shows fewer converted quotes, so if that status overstates wins, the dollar figures fall.</li>
+      <li><b>Ticket is from a small sample.</b> 50 converted Meta quotes, matched to contacts by email, phone, then name.</li>
       <li><b>Revenue, not profit.</b> This is quoted job value before costs, and extra Meta bookings may close at a different rate than today's.</li>
     </ul>
   </div>
@@ -431,20 +429,20 @@ table('c-calls',['Rank','Hours to first call'],vals.map(function(v,i){return [i+
       return {st:st,pp:pp,newRate:newRate,extra:extra,q:extra*CLOSE_Q*TICKET,h:extra*CLOSE_H*TICKET,c:extra*TICKET};
     });
     var t=document.getElementById('rev-table');
-    t.innerHTML='<tr><th>Lift</th><th>Meta booking rate</th><th>Extra bookings</th><th>Quote-confirmed close</th><th>HubSpot-status close</th><th>Every booking closes</th></tr>'+rows.map(function(r){return '<tr><td>+'+r.st+(mode==='pp'?' pts':'%')+'</td><td class="num">'+r.newRate.toFixed(1)+'%</td><td class="num">'+Math.round(r.extra)+'</td><td class="num">'+money(r.q)+'</td><td class="num">'+money(r.h)+'</td><td class="num">'+money(r.c)+'</td></tr>'}).join('');
+    t.innerHTML='<tr><th>Lift</th><th>Meta booking rate</th><th>Extra bookings</th><th>Revenue upside</th></tr>'+rows.map(function(r){return '<tr><td>+'+r.st+(mode==='pp'?' pts':'%')+'</td><td class="num">'+r.newRate.toFixed(1)+'%</td><td class="num">'+Math.round(r.extra)+'</td><td class="num">'+money(r.h)+'</td></tr>'}).join('');
     var host=document.getElementById('rev-bars');host.innerHTML='';host.style.display='flex';host.style.flexDirection='column';host.style.gap='10px';
     var mx=Math.max.apply(null,rows.map(function(r){return r.h}))*1.05;
     rows.forEach(function(r){
-      [['q','Quote-confirmed','hi',r.q],['h','HubSpot-status','',r.h]].forEach(function(x,i){
+      [['h','Revenue','hi',r.h]].forEach(function(x,i){
         var row=document.createElement('div');row.className='row';
-        row.innerHTML='<div class="lab"><b>'+(i===0?'+'+r.st+(mode==='pp'?' pts':'%'):'')+'</b><span>'+(i===0?'quote-confirmed':'HubSpot status')+'</span></div><div class="track"></div>';
+        row.innerHTML='<div class="lab"><b>+'+r.st+(mode==='pp'?' pts':'%')+'</b><span>'+Math.round(r.extra)+' bookings</span></div><div class="track"></div>';
         var tr=row.querySelector('.track');var b=document.createElement('div');b.className='bar '+x[2];b.style.width=(x[3]/mx*100)+'%';
         var v=document.createElement('div');v.className='val';v.style.left=(x[3]/mx*100)+'%';v.textContent=money(x[3]);
         tr.appendChild(b);tr.appendChild(v);window.__bindTip(b,x[1]+': '+money(x[3])+' from about '+Math.round(r.extra)+' extra bookings');host.appendChild(row);
       });
     });
     var top=rows[1];
-    document.getElementById('rev-take').textContent='A 10 '+(mode==='pp'?'point':'percent')+' lift adds about '+Math.round(top.extra)+' bookings and roughly '+money(top.q)+' to '+money(top.h)+' of quoted work '+(per==='ann'?'a year':'year to date')+', depending on which close rate is right. That compares with about $27K of ad spend to date.';
+    document.getElementById('rev-take').textContent='A 10 '+(mode==='pp'?'point':'percent')+' lift adds about '+Math.round(top.extra)+' bookings and about '+money(top.h)+' of quoted work '+(per==='ann'?'a year':'year to date')+'. That compares with about $27K of ad spend to date.';
   }
   document.getElementById('lift-mode').addEventListener('change',render);
   document.getElementById('rev-period').addEventListener('change',render);
