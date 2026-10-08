@@ -89,6 +89,14 @@ button.reset:focus-visible{outline:2px solid var(--s1);outline-offset:2px}
 </div>
 
 <div class="card">
+  <h3>Return on speed: extra cost against gross revenue gain</h3>
+  <div class="sub" id="roi-sub"></div>
+  <div class="scroll"><table id="roi"></table></div>
+  <div class="take" id="roi-take"></div>
+  <div class="small">The lifts are assumptions: they are applied to today's number of jobs, with close rate and ticket unchanged. They add no ad spend, and technician capacity is not modeled. Direct gross profit uses the 2025 Item 19 average of about 66%. Franchisor revenue is royalty and brand fund on the extra sales plus the per-job contact center fee.</div>
+</div>
+
+<div class="card">
   <h3>What Item 19 reports</h3>
   <div class="sub">Figures from the 2026 FDD pages you shared. Gross sales per outlet, with service visits, leads and marketing. The average ticket is total gross sales divided by total service visits.</div>
   <div class="scroll"><table>
@@ -153,7 +161,7 @@ button.reset:focus-visible{outline:2px solid var(--s1);outline-offset:2px}
 <script>
 (function(){
 var PROF=[0.0125, 0.0143, 0.0054, 0.0376, 0.0036, 0.0072, 0.0107, 0.034, 0.0555, 0.0984, 0.0805, 0.068, 0.0626, 0.0608, 0.0662, 0.0483, 0.0698, 0.0572, 0.034, 0.0429, 0.0411, 0.0286, 0.0411, 0.0197];
-var DEF={loc:20,lpd:2.6,extra:10,burst:1.25,open:7,close:22,talk:6,wrap:1,un:2,p1a:40,p1b:35,p1c:28,pf:15,nf:3,cb:25,shrink:30,target:90,occ:75,rate:14,srate:30,span:12,jobs:185,tick:2439,mfee:350,jfee:35,bf:1,tech:500};
+var DEF={loc:20,lpd:2.6,extra:10,burst:1.25,open:7,close:22,talk:6,wrap:1,un:2,p1a:40,p1b:35,p1c:28,pf:15,nf:3,cb:25,shrink:30,target:90,occ:75,rate:14,srate:30,span:12,jobs:185,tick:2439,mfee:350,jfee:35,bf:1,tech:500,lift1:25,lift5:15,lift30:5,basefte:0,dgp:66.5,roy:7};
 var FIELDS=[
  ['g','Volume'],['loc','Locations'],['lpd','Leads per location per day'],['extra','Uplift for misrouted, duplicate or junk leads (%)'],['burst','Burst factor on hourly arrivals'],
  ['g','Coverage (Eastern time, 24-hour clock)'],['open','Opens at'],['close','Closes at'],
@@ -161,7 +169,8 @@ var FIELDS=[
  ['g','Connect rates'],['p1a','First attempt connects, target under 1 min (%)'],['p1b','First attempt connects, target under 5 min (%)'],['p1c','First attempt connects, target under 30 min (%)'],['pf','Each follow-up attempt connects (%)'],['nf','Follow-up attempts'],
  ['g','Staffing rules'],['target','Share of first calls on time (%)'],['occ','Occupancy cap (%)'],['shrink','Shrinkage (%)'],['span','Agents per supervisor'],
  ['g','Cost'],['rate','CSR loaded cost per hour ($)'],['srate','Supervisor loaded cost per hour ($)'],
- ['g','Fees and revenue per location'],['jobs','Invoiced jobs (service visits) per location per year'],['tick','Average gross sales per job ($)'],['mfee','Contact center fee per month ($)'],['jfee','Contact center fee per invoiced job ($)'],['bf','Brand development fund (% of gross sales)'],['tech','Technology fee ceiling per month, not assessed today ($)']
+ ['g','Fees and revenue per location'],['jobs','Invoiced jobs (service visits) per location per year'],['tick','Average gross sales per job ($)'],['mfee','Contact center fee per month ($)'],['jfee','Contact center fee per invoiced job ($)'],['bf','Brand development fund (% of gross sales)'],['tech','Technology fee ceiling per month, not assessed today ($)'],
+ ['g','Booking lift and baseline'],['lift1','Booking lift, under 1 minute (%)'],['lift5','Booking lift, under 5 minutes (%)'],['lift30','Booking lift, under 30 minutes (%)'],['basefte','Current CSR FTE (0 means staffed to workload only, no speed target)'],['dgp','Direct gross profit margin (%)'],['roy','Royalty (% of gross sales)']
 ];
 var P={};function load(){for(var k in DEF)P[k]=DEF[k]}load();
 function erl(N,A,T,S){if(N<=A)return 0;var term=1,s=1;for(var k=1;k<N;k++){term*=A/k;s+=term}var tN=term*A/N,last=tN*N/(N-A),pw=last/(s+last);return 1-pw*Math.exp(-(N-A)*T/S)}
@@ -186,7 +195,7 @@ function model(p,sla,p1){
 var SC=[['Under 1 minute',1,'p1a'],['Under 5 minutes',5,'p1b'],['Under 30 minutes',30,'p1c']];
 function run(){return SC.map(function(s){return model(P,s[1],P[s[2]]/100)})}
 function f1(x){return (Math.round(x*10)/10).toFixed(1)}
-function usd(x){return '$'+Math.round(x/1000)+'K'}
+function usd(x){return x>=1e6?'$'+(x/1e6).toFixed(2)+'M':'$'+Math.round(x/1000)+'K'}
 function render(){
   var R=run();
   document.getElementById('tiles').innerHTML=R.map(function(r,i){return '<div class="tile"><div class="k">First call '+SC[i][0].toLowerCase()+'</div><div class="v">'+f1(r.fte)+'<small>CSR FTE + '+r.sup+' supervisor</small></div><div class="d">Up to '+r.peak+' agents on shift at peak. About '+usd(r.cost)+' a year, or $'+f1(r.cpl)+' per lead.</div></div>'}).join('');
@@ -223,6 +232,30 @@ function render(){
   document.getElementById('fees').innerHTML=ft;
   var gap1=(R[0].cost-feeLoc*P.loc)/P.loc/12;
   document.getElementById('fee-take').textContent='At about '+Math.round(jobs)+' jobs per location, contact center fees of '+usd(feeLoc*P.loc)+' cover '+Math.round(feeLoc*P.loc/R[0].cost*100)+'% of a 1-minute program, '+Math.round(feeLoc*P.loc/R[1].cost*100)+'% of a 5-minute program and '+Math.round(feeLoc*P.loc/R[2].cost*100)+'% of a 30-minute program. '+(gap1>0?'The 1-minute gap is about $'+Math.round(gap1)+' a month per location, '+(gap1<=P.tech?'which fits inside the technology fee ceiling of $'+P.tech+' a month, currently not assessed.':'which is more than the technology fee ceiling of $'+P.tech+' a month.'):'The 1-minute program is fully covered.')+' The program cost covers calling only, so real cost is higher.';
+  var baseFTE=P.basefte>0?P.basefte:R[2].work/(P.occ/100)*7/(40*(1-P.shrink/100));
+  var baseSup=Math.ceil(baseFTE/P.span),baseCost=(baseFTE*P.rate+baseSup*P.srate)*2080;
+  var lifts=[P.lift1,P.lift5,P.lift30],totJobs=jobs*P.loc;
+  document.getElementById('roi-sub').textContent='Baseline: '+f1(baseFTE)+' CSR FTE plus '+baseSup+' supervisor ('+usd(baseCost)+' a year)'+(P.basefte>0?', as entered.':', staffed to the phone workload only with no speed target.')+' '+Math.round(totJobs).toLocaleString()+' jobs a year across '+P.loc+' locations at about '+usd(revLoc)+' each.';
+  var rr=SC.map(function(s,i){
+    var r=R[i],lift=lifts[i]/100,extraJobs=totJobs*lift,gross=extraJobs*P.tick,dgp=gross*P.dgp/100;
+    var inc=r.cost-baseCost,frAn=gross*(P.roy+P.bf)/100+extraJobs*P.jfee;
+    var perJobFr=P.tick*(P.roy+P.bf)/100+P.jfee,be=inc/(totJobs*perJobFr)*100;
+    return {lift:lifts[i],extraJobs:extraJobs,gross:gross,dgp:dgp,inc:inc,fr:frAn,be:be,fte:r.fte-baseFTE};
+  });
+  var rrows=[
+   ['Assumed booking lift',function(x){return x.lift+'%'}],
+   ['Additional jobs a year',function(x){return Math.round(x.extraJobs).toLocaleString()}],
+   ['Additional CSR FTE over baseline',function(x){return f1(x.fte)}],
+   ['Additional staffing cost a year',function(x){return usd(x.inc)}],
+   ['Gross revenue gain, all locations',function(x){return usd(x.gross)}],
+   ['Direct gross profit gain, all locations',function(x){return usd(x.dgp)}],
+   ['Franchisor revenue gain (royalty, brand fund, per-job fee)',function(x){return usd(x.fr)}],
+   ['Gross revenue gain per $1 of staffing cost',function(x){return '$'+Math.round(x.gross/x.inc)}],
+   ['Franchisor revenue gain less staffing cost',function(x){return (x.fr-x.inc<0?'-':'')+usd(Math.abs(x.fr-x.inc))}],
+   ['Booking lift needed for franchisor revenue to cover the cost',function(x){return f1(x.be)+'%'}]
+  ];
+  document.getElementById('roi').innerHTML='<tr><th>Metric</th>'+SC.map(function(s){return '<th>'+s[0]+'</th>'}).join('')+'</tr>'+rrows.map(function(row,i){return '<tr'+(i===4?' class="key"':'')+'><td>'+row[0]+'</td>'+rr.map(function(x){return '<td class="n">'+row[1](x)+'</td>'}).join('')+'</tr>'}).join('');
+  document.getElementById('roi-take').textContent='Faster calling adds '+usd(rr[0].inc)+' a year at 1 minute and returns '+usd(rr[0].gross)+' of gross revenue, about $'+Math.round(rr[0].gross/rr[0].inc)+' for each $1 of staffing. The franchisor share of that gain is '+usd(rr[0].fr)+', '+(rr[0].fr>=rr[0].inc?'enough to cover the added cost':'short of the added cost')+'. The 30-minute option has the best payback ratio but the smallest gain.';
   var hh='';
   R.forEach(function(r,i){
     var mx=Math.max.apply(null,r.hours.concat([1]));var cols='',labs='';
