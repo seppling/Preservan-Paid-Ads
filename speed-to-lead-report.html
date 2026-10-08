@@ -96,29 +96,29 @@ svg text{fill:var(--ink2);font-family:var(--mono);font-size:11px}
 </style>
 <div class="wrap">
 <header>
-  <div class="eyebrow">Preservan · Meta lead intake and booking · 2026 YTD</div>
-  <h1>Meta leads book about 25 points below other sources. Slow response alone does not explain it.</h1>
-  <p class="lede">983 contacts created Jan 1 to Oct 7, 2026. A booked lead is one in Assessment Scheduled or any later status. Time to deal is the closest available measure of how fast a lead is booked, because first-contact times are not tracked.</p>
+  <div class="eyebrow">Preservan Athens · Lead intake and booking · 2026 YTD · reconciled</div>
+  <h1>Almost half of Meta leads never get an address captured. Once one is captured, 93% book.</h1>
+  <p class="lede">43% of 2026 contacts belong to other territories and are excluded below. That leaves 559 leads. A booked lead is one in Assessment Scheduled or any later status. Meta is identified from the Source field, not Original Traffic Source.</p>
 </header>
 
 <section>
   <div class="eyebrow">Key insights</div>
   <div class="insights">
-    <div class="ins"><div class="tag">Booking gap</div><p><b>Meta books 60%. Other sources book 81 to 88%.</b> Meta is 46% of lead volume (455 of 983), so the gap affects the largest share of leads.</p></div>
-    <div class="ins"><div class="tag">Speed</div><p><b>A typical Meta lead gets a deal in 3.4 hours, but 1 in 4 takes more than 4.7 days.</b> Weekend leads take 17 hours at the median against 1.4 on weekdays, and evening leads take 12 to 14 hours.</p></div>
-    <div class="ins"><div class="tag">Caution</div><p><b>Slower response has not lowered the booking rate.</b> Meta leads created on weekends and evenings book at 59.8%, the same as weekday daytime leads at 59.7%. Speed is a hypothesis here, not a proven cause.</p></div>
-    <div class="ins"><div class="tag">Stalled leads</div><p><b>93 Meta leads are stuck</b> (53 New Lead, 30 Cold, 10 Pending), with about 9 touches each. Another 27 are out of territory, which is an ad targeting issue.</p></div>
-    <div class="ins"><div class="tag">Upside</div><p><b>If intake is the driver, 5 to 15 points of lift is worth $17K to $50K year to date.</b> That uses the $1,427 Meta ticket and a 52% close rate from HubSpot status.</p></div>
-    <div class="ins"><div class="tag">Blind spot</div><p><b>First-contact speed cannot be measured.</b> Only 66 of 2,174 contacts have a first-call date. Without it, no one can prove or rule out an intake problem.</p></div>
+    <div class="ins"><div class="tag">Data fix</div><p><b>424 of 983 contacts are from other territories</b> (Charlotte, Jacksonville, Birmingham and others). They rose from about 5 a month in Q1 to 157 in July, and 93% sit in booked statuses. They explain the July lead spike and the inflated booking rate.</p></div>
+    <div class="ins"><div class="tag">Booking gap</div><p><b>In-territory Meta books 50%</b> (182 of 366). Agency web search books 96% and referrals 91%. Leads with no source recorded book 49%.</p></div>
+    <div class="ins"><div class="tag">Where it breaks</div><p><b>176 Meta leads (48%) never had a city captured</b>, and 5 of them booked. They are New Lead, Not Interested, Cold or out of territory. The 190 with a city book at 93%.</p></div>
+    <div class="ins"><div class="tag">Speed</div><p><b>A typical Meta lead gets a deal in 2.2 hours</b>, against 0.1 hours for other sources. Weekend Meta leads take 14 hours. But weekend and evening leads book at 47%, against 53% on weekday daytime, which is not a significant difference.</p></div>
+    <div class="ins"><div class="tag">Revenue</div><p><b>Meta is 37% of converted revenue and about two-thirds of leads.</b> Meta ticket averages $1,470 and the median is $1,243, about the same as other sources ($1,280). Meta earns $241 per lead against $504 for web search.</p></div>
+    <div class="ins"><div class="tag">Upside</div><p><b>5 to 15 points more Meta bookings is worth about $5K to $16K year to date</b>, at $291 per extra booking. The gap is smaller than earlier estimates, which used other territories' bookings.</p></div>
   </div>
   <div class="card">
     <h3>Recommended next steps</h3>
     <ul class="plain">
-      <li><b>Test a local first touch.</b> Send Meta leads a text from a local number within 5 minutes, with a booking link, and compare booking rate over about 3 months.</li>
-      <li><b>Log the first touch.</b> Ask corporate to record the first call or text, with a timestamp, on every lead.</li>
-      <li><b>Cover weekends and evenings.</b> Use an automatic text with a booking link, or extend CSR hours.</li>
-      <li><b>Work the stalled leads and fix targeting.</b> Review the 93 stuck Meta leads, and ask the agency to tighten geography to cut out-of-territory leads.</li>
-      <li><b>Confirm two HubSpot definitions.</b> What sets the marketing contact flag, and what New Approved Quote means. Both affect reporting.</li>
+      <li><b>Fix territory routing.</b> Ask corporate to assign contacts by city or ZIP, and to confirm none of your ad spend is generating other territories' leads. 194 of the 424 are Meta-sourced.</li>
+      <li><b>Capture location first.</b> Add the city or ZIP to the Meta form, and to the first text and call, so out-of-territory and unqualified leads are identified immediately.</li>
+      <li><b>Work the stalled leads.</b> Triage the 50 Meta New Lead and 29 Cold Lead contacts that have no city, and remove those out of territory.</li>
+      <li><b>Test a local first touch.</b> Text Meta leads from a local number within 5 minutes, with a booking link, and compare the booking rate over about 3 months.</li>
+      <li><b>Fill the Source field and log first touches.</b> 141 of 2026 contacts have no Source, and first-contact times cannot be measured.</li>
     </ul>
   </div>
 </section>
@@ -127,26 +127,42 @@ svg text{fill:var(--ink2);font-family:var(--mono);font-size:11px}
   <div class="eyebrow">Evidence</div>
   <div class="grid">
     <div class="card">
-      <h3>Booking rate by source</h3>
-      <div class="sub">Share of leads now in Assessment Scheduled or later.</div>
-      <div id="c-source" role="img" aria-label="Booking rate by traffic source"></div>
+      <h3>Booking rate by lead source</h3>
+      <div class="sub">559 in-territory 2026 leads. Share now in Assessment Scheduled or later.</div>
+      <div id="c-source" role="img" aria-label="Booking rate by source"></div>
       <div id="t-source"></div>
     </div>
     <div class="card">
-      <h3>Booking rate by when the Meta lead arrived</h3>
-      <div class="sub">Weekday daytime leads get the fastest response. Weekend and evening leads wait longest.</div>
-      <div id="c-window" role="img" aria-label="Meta booking rate and hours to deal by arrival window"></div>
-      <div class="take">Median response time is more than 20 times longer in the slow windows, and booking rate does not move.</div>
+      <h3>Meta leads by whether a city was captured</h3>
+      <div class="sub">366 in-territory Meta leads, 2026.</div>
+      <div id="c-city" role="img" aria-label="Meta booking rate by whether city was captured"></div>
+      <div class="take">The booking problem sits in leads that never reach address capture: mostly New Lead, Not Interested, Cold and out of territory.</div>
+      <div id="t-city"></div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Other-territory contacts by month created</h3>
+      <div class="sub">Count of 2026 contacts that belong to other territories.</div>
+      <div id="c-terr" role="img" aria-label="Other territory contacts by month"></div>
+      <div id="t-terr"></div>
+    </div>
+    <div class="card">
+      <h3>Meta booking rate by arrival window</h3>
+      <div class="sub">In-territory Meta. Median hours to deal in the slow windows are far longer.</div>
+      <div id="c-window" role="img" aria-label="Meta booking rate by arrival window"></div>
+      <div class="take">Median time to deal is about 0.6 hours on weekday daytime and 14 hours on weekends, yet the booking rate difference is within chance.</div>
       <div id="t-window"></div>
     </div>
   </div>
 
   <div class="card">
     <h3>Meta deals by hours to create, long tail marked</h3>
-    <div class="sub">232 Meta leads with a deal, created Mar to Oct. The dashed line is the 113 hour trimming cutoff.</div>
+    <div class="sub">142 in-territory Meta leads with a deal, created Mar to Oct. The dashed line is the 109 hour trimming cutoff.</div>
     <div style="position:relative"><div id="c-hist" role="img" aria-label="Histogram of Meta hours to deal creation"></div></div>
-    <div class="legend"><span><i style="background:var(--s1)"></i>Kept in typical picture (175)</span><span><i style="background:repeating-linear-gradient(135deg,var(--s2) 0 3px,transparent 3px 6px);border:1px solid var(--s2)"></i>Trimmed as long tail (57, 25%)</span></div>
-    <div class="take">Half of the kept deals appear within 4 hours. The trimmed 25% are real leads that took more than 4.7 days. Meta median is 14 hours untrimmed and 3.4 hours trimmed.</div>
+    <div class="legend"><span><i style="background:var(--s1)"></i>Kept in typical picture (112)</span><span><i style="background:repeating-linear-gradient(135deg,var(--s2) 0 3px,transparent 3px 6px);border:1px solid var(--s2)"></i>Trimmed as long tail (30, 21%)</span></div>
+    <div class="take">Trimmed, the Meta median is 2.2 hours (12 hours untrimmed) and 76% get a deal within 24 hours. Other sources: median 0.1 hours, 88% within 24 hours.</div>
     <div id="t-hist"></div>
   </div>
 </section>
@@ -158,8 +174,8 @@ svg text{fill:var(--ink2);font-family:var(--mono);font-size:11px}
     <div style="display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center">
       <label class="small" for="lift-mode">Lift means</label>
       <select id="lift-mode" style="font:inherit;font-size:13px;padding:6px 8px;border-radius:4px;border:1px solid var(--line);background:var(--surface);color:var(--ink)">
-        <option value="pp">Percentage points (60% to 65%, 70%, 75%)</option>
-        <option value="rel">Relative (60% times 1.05, 1.10, 1.15)</option>
+        <option value="pp">Percentage points (50% to 55%, 60%, 65%)</option>
+        <option value="rel">Relative (50% times 1.05, 1.10, 1.15)</option>
       </select>
       <label class="small" for="rev-period">Show</label>
       <select id="rev-period" style="font:inherit;font-size:13px;padding:6px 8px;border-radius:4px;border:1px solid var(--line);background:var(--surface);color:var(--ink)">
@@ -170,32 +186,31 @@ svg text{fill:var(--ink2);font-family:var(--mono);font-size:11px}
     <div class="scroll"><table id="rev-table"></table></div>
     <div id="rev-bars" role="img" aria-label="Revenue upside by scenario"></div>
     <div class="take" id="rev-take"></div>
-    <div class="small">Extra bookings × 52% close rate (141 of 272 Meta bookings in an approved or invoiced HubSpot status) × $1,427 average Meta ticket (50 converted quotes in Jobber, median $1,125). This is quoted revenue before costs, and Meta tickets run about 20% below the 2026 average.</div>
+    <div class="small">Extra bookings × 20% close rate (36 of 182 in-territory Meta bookings are in an approved or invoiced HubSpot status) × $1,470 average Meta ticket (60 converted quotes in Jobber, median $1,243) = $291 per extra booking. In territory, HubSpot's New Approved Quote matches a converted Jobber quote 98% of the time. Quoted revenue before costs.</div>
   </div>
 </section>
 
 <section>
   <details class="card">
-    <summary>Method, trimming and data notes</summary>
+    <summary>Method, reconciliation and data notes</summary>
     <div class="steps" style="margin-top:12px">
       <div class="step"><div class="n">983</div><div class="t">Contacts created in 2026</div></div>
-      <div class="step"><div class="n">726</div><div class="t">Have a deal. Time to deal is measured only on these.</div></div>
-      <div class="step cut"><div class="n">−52</div><div class="t">Jan and Feb contacts. Their deals were created in bulk later, with medians over 4,000 hours.</div></div>
-      <div class="step"><div class="n">674</div><div class="t">Analysed, Mar to Oct</div></div>
-      <div class="step cut"><div class="n">−120</div><div class="t">Over 113 hours, the long tail (18%)</div></div>
-      <div class="step"><div class="n">554</div><div class="t">Kept for the typical picture</div></div>
+      <div class="step cut"><div class="n">−424</div><div class="t">Other-territory contacts, by city</div></div>
+      <div class="step"><div class="n">559</div><div class="t">In scope. 366 are Meta.</div></div>
+      <div class="step"><div class="n">283</div><div class="t">Have a deal and were created Mar to Oct</div></div>
+      <div class="step cut"><div class="n">−51</div><div class="t">Over 109 hours, the long tail</div></div>
+      <div class="step"><div class="n">232</div><div class="t">Kept for typical speed</div></div>
     </div>
     <ul class="plain" style="margin-top:12px">
-      <li><b>Cutoff.</b> Raw hours are heavily skewed (skewness 7.0). A log-scale outlier test flagged nothing, because the data is nearly symmetric once logged (skewness 0.13), so the tail is the natural shape. I used a Tukey upper fence on raw hours: Q3 + 1.5 × IQR = 45 + 1.5 × 45 = 113 hours (4.7 days).</li>
-      <li><b>Other cutoffs.</b> A 7-day cap gives a pooled median of 0.58 hours, the 90th percentile 0.64 and the 95th percentile 1.07. The conclusion does not depend on the exact cutoff.</li>
-      <li><b>What trimming means.</b> The 120 trimmed deals are mostly booked or quoted customers who took longer. Trimming describes the typical lead and hides the slow quarter, which is why that quarter is shown separately.</li>
-      <li><b>Time to deal as a proxy.</b> A deal is created within a minute of the Customer change for 85% of leads that have both, so Customer is treated as assessment booked. It is not time to first contact.</li>
-      <li><b>Instant deals.</b> Many near-zero times are contacts created already booked. Excluding anything under 5 minutes, the trimmed Meta median is 8.3 hours.</li>
-      <li><b>Meta definition.</b> All 455 Paid Social leads count as Meta, including 116 flagged non-marketing in HubSpot, which is likely a tagging or cleanup effect (89 of them were created Jan to May). The agency's 467 matches Paid Social plus Organic Social plus Other Campaigns (455 + 6 + 6).</li>
-      <li><b>Cost.</b> $27K YTD spend assumed to be all Meta gives about $59 per lead, about $99 per booked assessment and about $191 per approved or invoiced lead.</li>
-      <li><b>Call data.</b> 66 contacts have a first-call date and 17 were created since March. 41 of the 66 had the call logged within a minute of creation, likely inbound calls that created the contact. For the 15 called within 7 days, the median is 1.5 hours, and the deal followed within 4 to 16 minutes in 6 of them. Too few to measure speed to contact.</li>
-      <li><b>Booking status.</b> Lead status is a snapshot. Cancelled assessments and declined quotes are not separate statuses, so the booking rate may be slightly low.</li>
-      <li><b>Sources.</b> 2026 Contacts export, Filtered Contacts 2 export and Jobber quotes export. 5 emails and 51 phone numbers are duplicated and were not de-duplicated.</li>
+      <li><b>Territory rule.</b> A contact is in territory if its city has at least 2 quotes in the Athens Jobber account (30 cities, mainly Athens, Lawrenceville, Dacula, Bogart, Watkinsville). 23 cities with one quote are ambiguous and 220 contacts have no city. Contacts in any other city are other-territory. Other-territory leads book at 93% and none match a Jobber quote, which fits a hand-off to another franchise.</li>
+      <li><b>No-city leads stay in.</b> City is usually captured when an assessment is booked, so removing no-city leads would inflate the rate. They are counted as in scope. Some may belong to other territories, so the 50% Meta booking rate is a floor.</li>
+      <li><b>Source mapping.</b> Meta is Source = Meta - Form, Meta (StructureM) or Meta - Call In. Original Traffic Source labelled 110 of the 560 Meta-tagged 2026 contacts as Direct, Offline or other. Contacts with no Source (141) stay unattributed.</li>
+      <li><b>Trimming.</b> Time to deal is heavily skewed. I used a Tukey upper fence on raw hours, Q3 + 1.5 × IQR, which is 109 hours (4.5 days). Jan and Feb deals were created in bulk later, so they are excluded.</li>
+      <li><b>Time to deal as a proxy.</b> A deal is created within a minute of the Customer change for 85% of leads that have both. It is not time to first contact, and only 66 contacts have a first-call date.</li>
+      <li><b>Cost.</b> If the full $27K was spent for this territory, that is $74 per in-territory Meta lead, $148 per booked assessment and $450 per converted job (60). Converted Meta quotes total $88K, about 3.3 times the spend, before costs.</li>
+      <li><b>Agency count.</b> I could not reproduce the agency's 467 leads from Source tags. Source gives 560 Meta-tagged contacts across all territories, or 366 in territory.</li>
+      <li><b>Booking status.</b> Lead status is a snapshot, and Cancelled assessments and declined quotes are not separate statuses.</li>
+      <li><b>Sources.</b> Filtered Contacts 3 export, Jobber quotes export, and earlier contact exports. 5 emails and 51 phone numbers are duplicated and were not de-duplicated.</li>
     </ul>
   </details>
 </section>
@@ -238,32 +253,41 @@ function hbars(id,rows,o){
 
 /* booking by source */
 hbars('c-source',[
-  {label:'Meta (paid social)',sub:'455 leads',v:59.8,cls:'hi',tip:'Meta: 272 of 455 booked'},
-  {label:'Offline',sub:'243 leads',v:80.7,tip:'Offline: 196 of 243 booked'},
-  {label:'Direct',sub:'173 leads',v:88.4,tip:'Direct: 153 of 173 booked'},
-  {label:'Organic search',sub:'60 leads',v:88.3,tip:'Organic search: 53 of 60 booked'},
-  {label:'Paid search',sub:'30 leads',v:86.7,tip:'Paid search: 26 of 30 booked'}
-],{max:100,fmt:function(v){return v.toFixed(0)+'%'},ref:73.2,refLabel:'73% all leads'});
-table('t-source',['Source','Leads','Booked','Rate'],[['Meta','455','272','59.8%'],['Offline','243','196','80.7%'],['Direct','173','153','88.4%'],['Organic search','60','53','88.3%'],['Paid search','30','26','86.7%'],['All leads','983','720','73.2%']]);
+  {label:'Meta',sub:'366 leads',v:49.7,cls:'hi',tip:'Meta: 182 of 366 booked'},
+  {label:'No source recorded',sub:'89 leads',v:49.4,tip:'No source: 44 of 89 booked'},
+  {label:'Agency web search',sub:'45 leads',v:95.6,tip:'Agency web search: 43 of 45 booked'},
+  {label:'Referral and partner',sub:'22 leads',v:90.9,tip:'Referral and partner: 20 of 22 booked'},
+  {label:'Jobber sync',sub:'17 leads',v:94.1,tip:'Jobber sync: 16 of 17 booked'},
+  {label:'Other',sub:'15 leads',v:100,tip:'Other: 15 of 15 booked'}
+],{max:100,fmt:function(v){return v.toFixed(0)+'%'},ref:57.9,refLabel:'58% all in-territory leads'});
+table('t-source',['Source','Leads','Booked','Rate'],[['Meta','366','182','49.7%'],['No source recorded','89','44','49.4%'],['Agency web search','45','43','95.6%'],['Referral and partner','22','20','90.9%'],['Jobber sync','17','16','94.1%'],['Other','15','15','100%'],['Offline marketing','5','4','80%'],['All in territory','559','324','58.0%']]);
 
-/* window test */
+hbars('c-city',[
+  {label:'City captured',sub:'190 leads',v:92.6,cls:'hi',tip:'176 of 190 booked'},
+  {label:'No city captured',sub:'176 leads',v:2.8,cls:'warn',tip:'5 of 176 booked'}
+],{max:100,fmt:function(v){return v.toFixed(0)+'%'}});
+table('t-city',['Group','Leads','Booked','Rate'],[['City captured','190','176','92.6%'],['No city captured','176','5','2.8%']]);
+
+var TM=[['Jan',6,46],['Feb',5,54],['Mar',5,61],['Apr',15,74],['May',21,89],['Jun',39,100],['Jul',157,238],['Aug',102,180],['Sep',69,119]];
+hbars('c-terr',TM.map(function(m){return {label:m[0],sub:'of '+m[2]+' contacts',v:m[1],cls:m[1]>30?'warn':'hi',tip:m[0]+': '+m[1]+' of '+m[2]+' contacts are other-territory'}}),{max:170,fmt:function(v){return String(Math.round(v))}});
+table('t-terr',['Month','Other-territory','All contacts','Share'],TM.map(function(m){return [m[0],m[1],m[2],Math.round(m[1]/m[2]*100)+'%']}));
+
 hbars('c-window',[
-  {label:'Booking rate, weekday daytime',sub:'191 leads',v:59.7,cls:'hi',tip:'Weekday 7 AM to 6 PM: 59.7% booked'},
-  {label:'Booking rate, weekend or evening',sub:'264 leads',v:59.8,cls:'warn',tip:'Weekend or evening: 59.8% booked'}
-],{max:100,fmt:function(v){return v.toFixed(1)+'%'}});
+  {label:'Booking rate, weekday daytime',sub:'170 leads',v:52.9,cls:'hi',tip:'Weekday 7 AM to 6 PM: 52.9% booked'},
+  {label:'Booking rate, weekend or evening',sub:'196 leads',v:46.9,cls:'warn',tip:'Weekend or evening: 46.9% booked'}
+],{max:100,fmt:function(v){return v.toFixed(0)+'%'}});
 (function(){var h=document.getElementById('c-window');var d=document.createElement('div');d.style.marginTop='14px';h.appendChild(d);d.id='c-window-h';
   hbars('c-window-h',[
-   {label:'Median hours to deal, weekday daytime',sub:'trimmed',v:0.6,cls:'hi',tip:'Weekday daytime median about 0.6 hours'},
-   {label:'Median hours to deal, weekend',sub:'trimmed',v:17.2,cls:'warn',tip:'Weekend median 17.2 hours'},
-   {label:'Median hours to deal, 6 to 9 PM',sub:'trimmed',v:14.2,cls:'warn',tip:'6 to 9 PM median 14.2 hours'}
-  ],{max:20,fmt:function(v){return v.toFixed(1)+' h'}});
+   {label:'Median hours to deal, weekday daytime',sub:'trimmed, 54 deals',v:0.6,cls:'hi',tip:'Weekday daytime median 0.6 hours'},
+   {label:'Median hours to deal, weekend',sub:'trimmed, 32 deals',v:14.3,cls:'warn',tip:'Weekend median 14.3 hours'}
+  ],{max:16,fmt:function(v){return v.toFixed(1)+' h'}});
 })();
-table('t-window',['Window','Meta leads','Booking rate','Median hours to deal'],[['Weekday 7 AM to 6 PM','191','59.7%','0.6'],['Weekend or evening','264','59.8%','14 to 17']]);
+table('t-window',['Window','Meta leads','Booking rate'],[['Weekday 7 AM to 6 PM','170','52.9%'],['Weekend or evening','196','46.9%']]);
 
 /* histogram */
-var H=[['≤15m',49],['15–60m',21],['1–4h',19],['4–12h',19],['12–24h',22],['24–48h',28],['48–113h',17],['>113h',57]];
+var H=[['≤15m',35],['15–60m',15],['1–4h',9],['4–12h',12],['12–24h',14],['24–48h',16],['48–109h',11],['>109h',30]];
 var hist=document.getElementById('c-hist');var hh=document.createElement('div');hh.className='hist';var hl=document.createElement('div');hl.className='hlabs';
-var mx=60;
+var mx=40;
 H.forEach(function(d,i){
   var c=document.createElement('div');c.className='hcol';
   var n=document.createElement('div');n.className='hn';n.textContent=d[1];
@@ -281,7 +305,7 @@ table('t-hist',['Bucket','Meta deals','Treatment'],H.map(function(d,i){return [d
 
 /* revenue what-if */
 (function(){
-  var LEADS=455,BASE=272/455,TICKET=1427,CLOSE_Q=50/272,CLOSE_H=141/272,ANN=365/280;
+  var LEADS=366,BASE=182/366,TICKET=1470,CLOSE_Q=0,CLOSE_H=36/182,ANN=365/280;
   var steps=[5,10,15];
   function money(v){return v>=1000?'$'+(v/1000).toFixed(1)+'K':'$'+Math.round(v)}
   function render(){
