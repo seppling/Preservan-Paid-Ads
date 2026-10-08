@@ -97,7 +97,7 @@ svg text{fill:var(--ink2);font-family:var(--mono);font-size:11px}
 <div class="wrap">
 <header>
   <div class="eyebrow">Preservan Athens · Lead intake and booking · 2026 YTD · reconciled</div>
-  <h1>Almost half of Meta leads never get an address captured. Once one is captured, 93% book.</h1>
+  <h1>Nearly half of Meta leads stall before a city is captured, despite a median of 8 logged touches.</h1>
   <p class="lede">43% of 2026 contacts belong to other territories and are excluded below. That leaves 559 leads. A booked lead is one in Assessment Scheduled or any later status. Meta is identified from the Source field, not Original Traffic Source.</p>
 </header>
 
@@ -106,8 +106,8 @@ svg text{fill:var(--ink2);font-family:var(--mono);font-size:11px}
   <div class="insights">
     <div class="ins"><div class="tag">Data fix</div><p><b>424 of 983 contacts are from other territories</b> (Charlotte, Jacksonville, Birmingham and others). They rose from about 5 a month in Q1 to 157 in July, and 93% sit in booked statuses. They explain the July lead spike and the inflated booking rate.</p></div>
     <div class="ins"><div class="tag">Booking gap</div><p><b>In-territory Meta books 50%</b> (182 of 366). Agency web search books 96% and referrals 91%. Leads with no source recorded book 49%.</p></div>
-    <div class="ins"><div class="tag">Where it breaks</div><p><b>176 Meta leads (48%) never had a city captured</b>, and 5 of them booked. They are New Lead, Not Interested, Cold or out of territory. The 190 with a city book at 93%.</p></div>
-    <div class="ins"><div class="tag">Speed</div><p><b>A typical Meta lead gets a deal in 2.2 hours</b>, against 0.1 hours for other sources. Weekend Meta leads take 14 hours. But weekend and evening leads book at 47%, against 53% on weekday daytime, which is not a significant difference.</p></div>
+    <div class="ins"><div class="tag">Contact gap</div><p><b>176 Meta leads (48%) have no city, which is captured only after contact.</b> 95% have logged attempts, a median of 8 (leads with a city: 2). About half are unresponsive, 28% declined and 13% are out of territory. Other sources: 23% have no city.</p></div>
+    <div class="ins"><div class="tag">Speed</div><p><b>A typical Meta lead gets a deal in 2.2 hours</b>, against 0.1 hours for other sources. Weekend Meta leads take 14 hours. Slow-window leads stall a little more (51% vs 45% with no city) and book less (47% vs 53%), but the samples cannot rule an effect of up to about 15 points in or out.</p></div>
     <div class="ins"><div class="tag">Revenue</div><p><b>Meta is 37% of converted revenue and about two-thirds of leads.</b> Meta ticket averages $1,470 and the median is $1,243, about the same as other sources ($1,280). Meta earns $241 per lead against $504 for web search.</p></div>
     <div class="ins"><div class="tag">Upside</div><p><b>5 to 15 points more Meta bookings is worth about $5K to $16K year to date</b>, at $291 per extra booking. The gap is smaller than earlier estimates, which used other territories' bookings.</p></div>
   </div>
@@ -115,9 +115,10 @@ svg text{fill:var(--ink2);font-family:var(--mono);font-size:11px}
     <h3>Recommended next steps</h3>
     <ul class="plain">
       <li><b>Fix territory routing.</b> Ask corporate to assign contacts by city or ZIP, and to confirm none of your ad spend is generating other territories' leads. 194 of the 424 are Meta-sourced.</li>
-      <li><b>Capture location first.</b> Add the city or ZIP to the Meta form, and to the first text and call, so out-of-territory and unqualified leads are identified immediately.</li>
+      <li><b>Raise the contact rate.</b> Try texting first from a local number, vary call times, and review what the 8 touches per stalled lead actually were (calls, texts, times).</li>
+      <li><b>Ask for ZIP on the Meta form.</b> Location would then be known before first contact, so out-of-territory leads are caught early and the data gap closes.</li>
       <li><b>Work the stalled leads.</b> Triage the 50 Meta New Lead and 29 Cold Lead contacts that have no city, and remove those out of territory.</li>
-      <li><b>Test a local first touch.</b> Text Meta leads from a local number within 5 minutes, with a booking link, and compare the booking rate over about 3 months.</li>
+      <li><b>Test a fast first touch.</b> Text Meta leads within 5 minutes, with a booking link, and compare contact and booking rates over about 3 months.</li>
       <li><b>Fill the Source field and log first touches.</b> 141 of 2026 contacts have no Source, and first-contact times cannot be measured.</li>
     </ul>
   </div>
@@ -134,9 +135,9 @@ svg text{fill:var(--ink2);font-family:var(--mono);font-size:11px}
     </div>
     <div class="card">
       <h3>Meta leads by whether a city was captured</h3>
-      <div class="sub">366 in-territory Meta leads, 2026.</div>
+      <div class="sub">366 in-territory Meta leads, 2026. City is captured after first contact.</div>
       <div id="c-city" role="img" aria-label="Meta booking rate by whether city was captured"></div>
-      <div class="take">The booking problem sits in leads that never reach address capture: mostly New Lead, Not Interested, Cold and out of territory.</div>
+      <div class="take">This splits leads that connected from leads that stalled. The stalled group has a median of 8 logged touches, against 2 for the connected group, so effort is not the gap. Lead age matters: leads under 30 days old are 73 to 85% stalled so far, and leads over 90 days old are 43%.</div>
       <div id="t-city"></div>
     </div>
   </div>
@@ -152,7 +153,7 @@ svg text{fill:var(--ink2);font-family:var(--mono);font-size:11px}
       <h3>Meta booking rate by arrival window</h3>
       <div class="sub">In-territory Meta. Median hours to deal in the slow windows are far longer.</div>
       <div id="c-window" role="img" aria-label="Meta booking rate by arrival window"></div>
-      <div class="take">Median time to deal is about 0.6 hours on weekday daytime and 14 hours on weekends, yet the booking rate difference is within chance.</div>
+      <div class="take">Median time to deal is about 0.6 hours on weekday daytime and 14 hours on weekends. The booking difference (6 points, 95% interval about −16 to +4) points the expected way but is not conclusive.</div>
       <div id="t-window"></div>
     </div>
   </div>
@@ -203,9 +204,10 @@ svg text{fill:var(--ink2);font-family:var(--mono);font-size:11px}
     </div>
     <ul class="plain" style="margin-top:12px">
       <li><b>Territory rule.</b> A contact is in territory if its city has at least 2 quotes in the Athens Jobber account (30 cities, mainly Athens, Lawrenceville, Dacula, Bogart, Watkinsville). 23 cities with one quote are ambiguous and 220 contacts have no city. Contacts in any other city are other-territory. Other-territory leads book at 93% and none match a Jobber quote, which fits a hand-off to another franchise.</li>
-      <li><b>No-city leads stay in.</b> City is usually captured when an assessment is booked, so removing no-city leads would inflate the rate. They are counted as in scope. Some may belong to other territories, so the 50% Meta booking rate is a floor.</li>
+      <li><b>No-city leads stay in.</b> City is captured after first contact, so a missing city means the lead has not connected, not that it is out of territory. They are counted as in scope. Some may belong to other territories, so the 50% Meta booking rate is a floor.</li>
       <li><b>Source mapping.</b> Meta is Source = Meta - Form, Meta (StructureM) or Meta - Call In. Original Traffic Source labelled 110 of the 560 Meta-tagged 2026 contacts as Direct, Offline or other. Contacts with no Source (141) stay unattributed.</li>
       <li><b>Trimming.</b> Time to deal is heavily skewed. I used a Tukey upper fence on raw hours, Q3 + 1.5 × IQR, which is 109 hours (4.5 days). Jan and Feb deals were created in bulk later, so they are excluded.</li>
+      <li><b>Lead age.</b> Recent leads are still in progress, so the stalled share looks higher for them. Among Meta leads over 90 days old, 43% have no city.</li>
       <li><b>Time to deal as a proxy.</b> A deal is created within a minute of the Customer change for 85% of leads that have both. It is not time to first contact, and only 66 contacts have a first-call date.</li>
       <li><b>Cost.</b> If the full $27K was spent for this territory, that is $74 per in-territory Meta lead, $148 per booked assessment and $450 per converted job (60). Converted Meta quotes total $88K, about 3.3 times the spend, before costs.</li>
       <li><b>Agency count.</b> I could not reproduce the agency's 467 leads from Source tags. Source gives 560 Meta-tagged contacts across all territories, or 366 in territory.</li>
