@@ -1,0 +1,357 @@
+<title>Preservan Speed to Lead</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* Layout: one-column report. Headline tiles first, then chart sections (booking, speed, calls), then method and caveats. */
+:root{
+  --bg:#f4f4f2; --surface:#fcfcfb; --ink:#0b0b0b; --ink2:#52514e; --ink3:#6f6e69;
+  --line:#e3e2de; --grid:#ecebe7; --s1:#2a78d6; --s2:#eb6834; --neutral:#b9b8b2; --tint:#eaf2fc;
+  --sans:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121211; --surface:#1a1a19; --ink:#ffffff; --ink2:#c3c2b7; --ink3:#9c9b92;
+    --line:#2e2e2b; --grid:#262624; --s1:#3987e5; --s2:#d95926; --neutral:#5a5953; --tint:#18273a; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121211; --surface:#1a1a19; --ink:#ffffff; --ink2:#c3c2b7; --ink3:#9c9b92;
+  --line:#2e2e2b; --grid:#262624; --s1:#3987e5; --s2:#d95926; --neutral:#5a5953; --tint:#18273a; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5;padding-inline:16px;padding-block:32px 64px}
+.wrap{max-width:1040px;margin-inline:auto;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{text-wrap:balance;margin:0;line-height:1.2}
+h1{font-size:clamp(26px,4.2vw,38px);font-weight:700;letter-spacing:-.01em}
+h2{font-size:21px;font-weight:700}
+h3{font-size:15px;font-weight:600}
+p{margin:0}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);font-weight:600}
+.lede{color:var(--ink2);max-width:68ch;font-size:16px}
+.meta{font-family:var(--mono);font-size:12px;color:var(--ink3)}
+header{display:flex;flex-direction:column;gap:10px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px;min-width:0;display:flex;flex-direction:column;gap:6px}
+.tile .k{font-size:12px;color:var(--ink3);letter-spacing:.04em;text-transform:uppercase;font-weight:600}
+.tile .v{font-family:var(--mono);font-size:30px;font-weight:600;letter-spacing:-.02em;line-height:1.1}
+.tile .v small{font-size:14px;color:var(--ink3);font-weight:400;margin-left:4px}
+.tile .d{font-size:13px;color:var(--ink2)}
+section{display:flex;flex-direction:column;gap:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:18px;min-width:0;display:flex;flex-direction:column;gap:12px}
+.card .sub{font-size:13px;color:var(--ink2)}
+.take{font-size:14px;color:var(--ink);background:var(--tint);border-radius:4px;padding:10px 12px}
+.row{display:grid;grid-template-columns:minmax(92px,150px) 1fr;gap:10px;align-items:center;min-width:0}
+.row .lab{font-size:13px;color:var(--ink2);min-width:0}
+.row .lab b{color:var(--ink);font-weight:600;display:block}
+.row .lab span{font-family:var(--mono);font-size:11px;color:var(--ink3)}
+.track{position:relative;height:22px;min-width:0;margin-right:52px}
+.bar{height:100%;border-radius:0 4px 4px 0;background:var(--neutral);min-width:2px;position:relative}
+.bar.hi{background:var(--s1)}
+.bar.warn{background:var(--s2)}
+.bar.hatch{background:repeating-linear-gradient(135deg,var(--s2) 0 3px,transparent 3px 6px);border:1px solid var(--s2);border-left:none}
+.val{position:absolute;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:12px;color:var(--ink);white-space:nowrap;padding-left:6px}
+.refline{position:absolute;top:-4px;bottom:-4px;width:0;border-left:1.5px dashed var(--ink3)}
+.reflab{font-size:11px;color:var(--ink3);font-family:var(--mono)}
+.hist{display:flex;align-items:flex-end;gap:6px;height:190px;padding-top:18px;border-bottom:1px solid var(--line)}
+.hcol{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;position:relative}
+.hbar{width:100%;border-radius:4px 4px 0 0;background:var(--s1);min-height:2px;position:relative}
+.hbar.hatch{background:repeating-linear-gradient(135deg,var(--s2) 0 3px,transparent 3px 6px);border:1px solid var(--s2);border-bottom:none}
+.hn{font-family:var(--mono);font-size:11px;color:var(--ink);margin-bottom:3px}
+.hlabs{display:flex;gap:6px}
+.hlabs div{flex:1;min-width:0;text-align:center;font-size:11px;color:var(--ink3);font-family:var(--mono);line-height:1.2;padding-top:4px}
+.fence{position:absolute;top:0;bottom:0;border-left:1.5px dashed var(--ink2);pointer-events:none}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12px;color:var(--ink2)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{text-align:right;padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+th{font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink3);font-weight:600}
+td.num,td .mono{font-family:var(--mono)}
+tr.emph td{background:var(--tint);font-weight:600}
+.scroll{overflow-x:auto;min-width:0}
+details{font-size:13px;color:var(--ink2)}
+summary{cursor:pointer;color:var(--ink3);font-size:12px}
+summary:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--s1);outline-offset:2px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.step{border:1px solid var(--line);border-radius:6px;padding:12px;background:var(--surface);min-width:0}
+.step .n{font-family:var(--mono);font-size:22px;font-weight:600}
+.step .t{font-size:12px;color:var(--ink2);margin-top:2px}
+.step.cut .n{color:var(--s2)}
+ul.plain{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;color:var(--ink2)}
+ul.plain b{color:var(--ink)}
+.insights{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:12px}
+.ins{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.ins .tag{font-size:11px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;color:var(--ink3)}
+.ins .tag.act{color:var(--s1)}
+.ins p{font-size:14px;color:var(--ink2)}
+.ins p b{color:var(--ink)}
+#tip{position:fixed;z-index:10;pointer-events:none;background:var(--ink);color:var(--bg);font-size:12px;padding:6px 9px;border-radius:4px;max-width:240px;opacity:0;transition:opacity .08s;font-family:var(--sans)}
+svg text{fill:var(--ink2);font-family:var(--mono);font-size:11px}
+.small{font-size:12px;color:var(--ink3)}
+@media (prefers-reduced-motion:reduce){#tip{transition:none}}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">Preservan · Lead qualification and booking · 2026 YTD</div>
+  <h1>Booked leads are healthy overall. Meta leads arrive slower and book less.</h1>
+  <p class="lede">983 contacts created Jan 1 to Oct 7, 2026, from HubSpot exports. "Customer" is treated as assessment booked, because a deal is created within a minute of the customer change for 85% of leads that have both.</p>
+  <div class="meta">Sources: 2026 Contacts export, Filtered Contacts 2 export · $27K YTD ad spend assumed to be Meta</div>
+</header>
+
+<div class="tiles">
+  <div class="tile"><div class="k">Booking rate, all leads</div><div class="v">73%<small>720 of 983</small></div><div class="d">79% once junk and out-of-territory leads are removed.</div></div>
+  <div class="tile"><div class="k">Booking rate, Meta</div><div class="v">60%<small>272 of 455</small></div><div class="d">65% after removing 36 junk or out-of-territory leads.</div></div>
+  <div class="tile"><div class="k">Meta time to deal, typical</div><div class="v">3.4 h<small>median</small></div><div class="d">26 hours with the slow tail left in.</div></div>
+  <div class="tile"><div class="k">Meta weekend leads</div><div class="v">17 h<small>vs 1.4 h weekday</small></div><div class="d">Only 56% get a deal within 24 hours, against 83% on weekdays.</div></div>
+  <div class="tile"><div class="k">Cost per Meta lead</div><div class="v">$59<small>CPL</small></div><div class="d">About $99 per booked assessment and $191 per approved quote or invoice.</div></div>
+</div>
+
+<section>
+  <div><div class="eyebrow">Part 1</div><h2>Booking rate</h2></div>
+  <div class="grid">
+    <div class="card">
+      <h3>Booking rate by source</h3>
+      <div class="sub">Share of leads now in Assessment Scheduled or any later status.</div>
+      <div id="c-source" role="img" aria-label="Booking rate by traffic source"></div>
+      <div class="take">Meta is 46% of lead volume and books 21 to 28 points below every other source.</div>
+      <div id="t-source"></div>
+    </div>
+    <div class="card">
+      <h3>Inside Meta: marketing flag</h3>
+      <div class="sub">Meta leads split by HubSpot marketing contact status.</div>
+      <div id="c-mkt" role="img" aria-label="Meta booking rate by marketing contact status"></div>
+      <div class="take">A quarter of Meta leads carry the non-marketing flag and almost none book. This looks like low-intent volume, and it is the biggest single drag on the Meta rate.</div>
+      <div id="t-mkt"></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div><div class="eyebrow">Part 2</div><h2>Speed from contact created to deal created</h2></div>
+  <div class="lede">Deal creation tracks the Customer change, so it is the best available proxy for time to book. It is not time to first contact.</div>
+
+  <div class="card">
+    <h3>Meta deals by hours to create, with the long tail marked</h3>
+    <div class="sub">232 Meta leads with a deal, created Mar to Oct. The dashed line is the 113 hour trimming cutoff.</div>
+    <div style="position:relative">
+      <div id="c-hist" role="img" aria-label="Histogram of Meta hours to deal creation"></div>
+    </div>
+    <div class="legend"><span><i style="background:var(--s1)"></i>Kept in typical picture (175)</span><span><i style="background:repeating-linear-gradient(135deg,var(--s2) 0 3px,transparent 3px 6px);border:1px solid var(--s2)"></i>Trimmed as long tail (57, 25%)</span></div>
+    <div class="take">Half of kept Meta deals appear within 4 hours. One in four takes longer than 4.7 days, and those leads are real, so they are still a problem even though they are left out of the typical numbers.</div>
+    <div id="t-hist"></div>
+  </div>
+
+  <div class="card">
+    <h3>Trimming effect on median and mean, in hours</h3>
+    <div class="sub">All sources, contacts created Mar to Oct.</div>
+    <div class="scroll"><table id="trim-table"></table></div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Meta median hours to deal, by time created</h3>
+      <div class="sub">Trimmed. Weekday versus weekend, then time of day.</div>
+      <div id="c-when" role="img" aria-label="Meta median hours to deal by weekday and time of day"></div>
+      <div class="take">Leads created on weekends and between 6 PM and midnight wait roughly 10 to 25 times longer than weekday daytime leads.</div>
+      <div id="t-when"></div>
+    </div>
+    <div class="card">
+      <h3>Meta median hours to deal, by month</h3>
+      <div class="sub">Trimmed. Small monthly samples, so read direction only.</div>
+      <div id="c-month" role="img" aria-label="Meta median hours to deal by month"></div>
+      <div class="take">Spring was fast. May, June and September ran 9 to 12 hours. July was the volume peak and held at 1.7 hours.</div>
+      <div id="t-month"></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div><div class="eyebrow">Part 3</div><h2>Recorded first call times</h2></div>
+  <div class="card">
+    <h3>Hours from contact created to first call</h3>
+    <div class="sub">15 contacts called within 7 days of creation, log scale. 10 more calls came later than 7 days and are not shown.</div>
+    <div id="c-calls" role="img" aria-label="Dot plot of hours to first call"></div>
+    <div class="legend"><span>Median 1.5 h</span><span>40% within 1 hour</span><span>67% within 4 hours</span><span>Longest 93 h</span></div>
+    <div class="take">Only 66 of 2,174 contacts have a first call date, and just 17 were created since March. When a call is logged, it is usually fast, and the deal appears 4 to 16 minutes later in 6 of 15 cases. That points to the first call being where the assessment gets booked.</div>
+    <ul class="plain">
+      <li><b>41 of 66</b> have the call logged within a minute of contact creation. These look like inbound calls that created the contact, and 39 of the 41 date from Aug to Nov 2025.</li>
+      <li><b>25 of 66</b> were called after creation. Median 41.6 hours untrimmed, 1.5 hours trimmed to 7 days.</li>
+      <li>Booking rate in this group is 79%, but callers were skewed toward people already ready to book. It says little about call speed.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div><div class="eyebrow">Method</div><h2>Methodology and data trimming</h2></div>
+  <div class="steps">
+    <div class="step"><div class="n">983</div><div class="t">Contacts created in 2026</div></div>
+    <div class="step"><div class="n">726</div><div class="t">Have a deal. Time to deal is measured only on these.</div></div>
+    <div class="step cut"><div class="n">−52</div><div class="t">Jan and Feb contacts. Their deals were created in bulk later, with medians over 4,000 hours.</div></div>
+    <div class="step"><div class="n">674</div><div class="t">Analysed, Mar to Oct</div></div>
+    <div class="step cut"><div class="n">−120</div><div class="t">Over 113 hours, the long tail (18%)</div></div>
+    <div class="step"><div class="n">554</div><div class="t">Kept for the typical picture</div></div>
+  </div>
+  <div class="grid">
+    <div class="card">
+      <h3>How the cutoff was chosen</h3>
+      <ul class="plain">
+        <li>Raw hours are heavily right-skewed (skewness 7.0), so the mean mostly reflects the tail.</li>
+        <li>A log-scale outlier test flagged nothing. After a log transform the data is nearly symmetric (skewness 0.13), so the tail is the natural shape of the data and not bad records.</li>
+        <li>The cutoff is a Tukey upper fence on raw hours: Q3 + 1.5 × IQR = 45 + 1.5 × 45 = <b>113 hours (4.7 days)</b>, set once across all sources.</li>
+        <li>The exclusion is a presentation choice. Those 120 deals are mostly booked or quoted customers who simply took longer.</li>
+        <li>Offline and many short Meta values are contacts created already booked, so a median near zero partly reflects how the record was created. Excluding anything under 5 minutes, the trimmed Meta median is 8.3 hours.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Result across other cutoffs</h3>
+      <div class="sub">All sources, 674 deals. The conclusion does not depend on the exact cutoff.</div>
+      <div class="scroll"><table id="sens-table"></table></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div><div class="eyebrow">Findings</div><h2>Key directional insights</h2></div>
+  <div class="insights">
+    <div class="ins"><div class="tag">Booking</div><p><b>Meta books at 60%, other sources at 81 to 88%.</b> Most of the gap is the non-marketing Meta segment (13% booked, 116 leads).</p></div>
+    <div class="ins"><div class="tag">Speed</div><p><b>Typical Meta deal appears in 3.4 hours.</b> Across all sources the typical lead is booked in under an hour, so Meta is the slow channel.</p></div>
+    <div class="ins"><div class="tag">Coverage gap</div><p><b>Weekends and evenings are the weak spot.</b> Weekend Meta leads take 17 hours at the median and 6 to 9 PM leads take 14 hours, against 1.4 and 0.6 hours in the daytime.</p></div>
+    <div class="ins"><div class="tag">Long tail</div><p><b>One in four Meta leads takes more than 4.7 days to book.</b> 53 Meta leads are still at New Lead after about 9 touches each, and 30 more are Cold Lead.</p></div>
+    <div class="ins"><div class="tag">Calls</div><p><b>When a first call is logged, it works.</b> The deal usually follows within minutes. Logging is too thin (66 contacts) to measure speed to contact.</p></div>
+    <div class="ins"><div class="tag">Cost</div><p><b>About $99 per booked Meta assessment.</b> Raising the Meta booking rate to the other sources' level would cut that cost by about a quarter.</p></div>
+  </div>
+  <div class="card">
+    <h3>Suggested next steps</h3>
+    <ul class="plain">
+      <li><b>Cover weekends and evenings.</b> Use an auto-reply with a booking link, or extend CSR hours, for Meta leads created after 6 PM and on Saturday and Sunday.</li>
+      <li><b>Tighten Meta lead quality.</b> Review targeting and form questions with the agency to reduce the non-marketing segment.</li>
+      <li><b>Work the stalled leads.</b> Triage the 53 Meta New Lead and 30 Cold Lead contacts for reactivation or clean-up.</li>
+      <li><b>Log the first call every time.</b> Without a timestamp, speed to first contact cannot be measured. Revisit in 60 to 90 days.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Data notes</h3>
+    <ul class="plain">
+      <li>Lead status is a current snapshot. Cancelled assessments, declined quotes and OOT assessments do not appear as statuses, so the booking rate may be slightly low.</li>
+      <li>Time to deal depends on how and when deals were created in HubSpot. It matches the Customer timing for 603 of 707 leads that have both.</li>
+      <li>CPL assumes all $27K went to Meta. If some went to search, Meta CPL falls and the other numbers move slightly.</li>
+      <li>5 emails and 51 phone numbers are duplicated across the 2026 contacts and were not de-duplicated.</li>
+    </ul>
+  </div>
+</section>
+</div>
+<div id="tip" role="tooltip"></div>
+
+<script>
+(function(){
+var tip=document.getElementById('tip');
+function showTip(e,t){tip.textContent=t;tip.style.opacity=1;var x=Math.min(e.clientX+12,window.innerWidth-250);tip.style.left=Math.max(8,x)+'px';tip.style.top=(e.clientY+14)+'px'}
+function hideTip(){tip.style.opacity=0}
+function bindTip(el,t){
+  el.setAttribute('tabindex','0');
+  el.addEventListener('pointermove',function(e){showTip(e,t)});
+  el.addEventListener('pointerleave',hideTip);
+  el.addEventListener('focus',function(){var r=el.getBoundingClientRect();showTip({clientX:r.left+r.width/2,clientY:r.top},t)});
+  el.addEventListener('blur',hideTip);
+}
+function table(host,headers,rows){
+  var d=document.createElement('details');var s=document.createElement('summary');s.textContent='View as table';d.appendChild(s);
+  var w=document.createElement('div');w.className='scroll';var t=document.createElement('table');
+  t.innerHTML='<tr>'+headers.map(function(h){return '<th>'+h+'</th>'}).join('')+'</tr>'+rows.map(function(r){return '<tr>'+r.map(function(c,i){return '<td class="'+(i?'num':'')+'">'+c+'</td>'}).join('')+'</tr>'}).join('');
+  w.appendChild(t);d.appendChild(w);document.getElementById(host).appendChild(d);
+}
+function hbars(id,rows,o){
+  var host=document.getElementById(id);host.style.display='flex';host.style.flexDirection='column';host.style.gap='10px';
+  rows.forEach(function(r){
+    var row=document.createElement('div');row.className='row';
+    row.innerHTML='<div class="lab"><b>'+r.label+'</b><span>'+(r.sub||'')+'</span></div><div class="track"></div>';
+    var tr=row.querySelector('.track');
+    var b=document.createElement('div');b.className='bar '+(r.cls||'');b.style.width=(r.v/o.max*100)+'%';
+    var v=document.createElement('div');v.className='val';v.textContent=o.fmt(r.v);
+    v.style.left=(r.v/o.max*100)+'%';tr.appendChild(v);
+    tr.insertBefore(b,tr.firstChild);
+    if(o.ref!=null){var rl=document.createElement('div');rl.className='refline';rl.style.left=(o.ref/o.max*100)+'%';tr.appendChild(rl)}
+    bindTip(b,r.tip||(r.label+': '+o.fmt(r.v)));
+    host.appendChild(row);
+  });
+  if(o.refLabel){var n=document.createElement('div');n.className='reflab';n.textContent='Dashed line: '+o.refLabel;host.appendChild(n)}
+}
+
+/* booking by source */
+hbars('c-source',[
+  {label:'Meta (paid social)',sub:'455 leads',v:59.8,cls:'hi',tip:'Meta: 272 of 455 booked'},
+  {label:'Offline',sub:'243 leads',v:80.7,tip:'Offline: 196 of 243 booked'},
+  {label:'Direct',sub:'173 leads',v:88.4,tip:'Direct: 153 of 173 booked'},
+  {label:'Organic search',sub:'60 leads',v:88.3,tip:'Organic search: 53 of 60 booked'},
+  {label:'Paid search',sub:'30 leads',v:86.7,tip:'Paid search: 26 of 30 booked'}
+],{max:100,fmt:function(v){return v.toFixed(0)+'%'},ref:73.2,refLabel:'73% all leads'});
+table('t-source',['Source','Leads','Booked','Rate'],[['Meta','455','272','59.8%'],['Offline','243','196','80.7%'],['Direct','173','153','88.4%'],['Organic search','60','53','88.3%'],['Paid search','30','26','86.7%'],['All leads','983','720','73.2%']]);
+
+hbars('c-mkt',[
+  {label:'Marketing contact',sub:'339 Meta leads',v:75.8,cls:'hi',tip:'257 of 339 booked'},
+  {label:'Non-marketing contact',sub:'116 Meta leads',v:12.9,cls:'warn',tip:'15 of 116 booked'}
+],{max:100,fmt:function(v){return v.toFixed(0)+'%'}});
+table('t-mkt',['Segment','Leads','Booked','Rate'],[['Marketing contact','339','257','75.8%'],['Non-marketing contact','116','15','12.9%']]);
+
+/* histogram */
+var H=[['≤15m',49],['15–60m',21],['1–4h',19],['4–12h',19],['12–24h',22],['24–48h',28],['48–113h',17],['>113h',57]];
+var hist=document.getElementById('c-hist');var hh=document.createElement('div');hh.className='hist';var hl=document.createElement('div');hl.className='hlabs';
+var mx=60;
+H.forEach(function(d,i){
+  var c=document.createElement('div');c.className='hcol';
+  var n=document.createElement('div');n.className='hn';n.textContent=d[1];
+  var b=document.createElement('div');b.className='hbar'+(i===7?' hatch':'');b.style.height=(d[1]/mx*150)+'px';
+  c.appendChild(n);c.appendChild(b);hh.appendChild(c);bindTip(b,d[0]+': '+d[1]+' Meta deals'+(i===7?' (trimmed)':''));
+  var l=document.createElement('div');l.textContent=d[0];hl.appendChild(l);
+});
+hist.appendChild(hh);hist.appendChild(hl);
+var fence=document.createElement('div');fence.className='fence';hh.appendChild(fence);
+function placeFence(){var cols=hh.querySelectorAll('.hcol');var a=cols[6].getBoundingClientRect(),b=cols[7].getBoundingClientRect(),p=hh.getBoundingClientRect();fence.style.left=((a.right+b.left)/2-p.left)+'px'}
+placeFence();window.addEventListener('resize',placeFence);if(window.ResizeObserver)new ResizeObserver(placeFence).observe(hh);
+table('t-hist',['Bucket','Meta deals','Treatment'],H.map(function(d,i){return [d[0],d[1],i===7?'Trimmed':'Kept']}));
+
+/* trim table */
+var T=[['Meta (paid social)','175 / 232',14.2,3.4,146.0,16.9,74,1],['Paid search','25 / 25',1.2,1.2,11.7,11.7,88],['Other direct and organic','199 / 228',1.8,1.1,77.0,12.5,84],['Offline','155 / 189',0.0,0.0,120.8,2.9,95],['All sources','554 / 674',1.5,0.5,110.6,11.2,84]];
+document.getElementById('trim-table').innerHTML='<tr><th>Source</th><th>Kept / total</th><th>Median before</th><th>Median after</th><th>Mean before</th><th>Mean after</th><th>Within 24h after</th></tr>'+T.map(function(r){return '<tr'+(r[7]?' class="emph"':'')+'><td>'+r[0]+'</td><td class="num">'+r[1]+'</td><td class="num">'+r[2].toFixed(1)+'</td><td class="num">'+r[3].toFixed(1)+'</td><td class="num">'+r[4].toFixed(1)+'</td><td class="num">'+r[5].toFixed(1)+'</td><td class="num">'+r[6]+'%</td></tr>'}).join('');
+document.getElementById('sens-table').innerHTML='<tr><th>Cutoff</th><th>Hours</th><th>Removed</th><th>Mean</th><th>Median</th></tr>'+[['Tukey fence (used)','113','120 (18%)','11.2','0.46'],['7 days','168','92 (14%)','17.2','0.58'],['90th percentile','250','68 (10%)','24.6','0.64'],['95th percentile','567','34 (5%)','42.9','1.07'],['No trimming','—','0','110.6','1.52']].map(function(r,i){return '<tr'+(i===0?' class="emph"':'')+'>'+r.map(function(c,j){return '<td class="'+(j?'num':'')+'">'+c+'</td>'}).join('')+'</tr>'}).join('');
+
+/* when */
+var W=[
+ {label:'Weekday',sub:'n 121',v:1.4,cls:'hi',tip:'Weekday: median 1.4 h, 83% within 24 h'},
+ {label:'Weekend',sub:'n 54',v:17.2,cls:'warn',tip:'Weekend: median 17.2 h, 56% within 24 h'},
+ {label:'7–9 AM',sub:'n 23',v:0.5,cls:'hi',tip:'7 to 9 AM: median 0.5 h'},
+ {label:'9 AM–6 PM',sub:'n 84',v:0.6,cls:'hi',tip:'9 AM to 6 PM: median 0.6 h'},
+ {label:'6–9 PM',sub:'n 28',v:14.2,cls:'warn',tip:'6 to 9 PM: median 14.2 h'},
+ {label:'9 PM–midnight',sub:'n 23',v:12.5,cls:'warn',tip:'9 PM to midnight: median 12.5 h'},
+ {label:'Midnight–7 AM',sub:'n 17',v:8.5,cls:'warn',tip:'Midnight to 7 AM: median 8.5 h'}
+];
+hbars('c-when',W,{max:20,fmt:function(v){return v.toFixed(1)+' h'}});
+table('t-when',['Window','Meta deals','Median hours'],W.map(function(r){return [r.label,r.sub.replace('n ',''),r.v.toFixed(1)]}));
+
+var M=[['Mar',14,2.7],['Apr',20,0.9],['May',17,12.5],['Jun',16,9.1],['Jul',62,1.7],['Aug',27,4.4],['Sep',18,10.0]];
+hbars('c-month',M.map(function(m){return {label:m[0],sub:'n '+m[1],v:m[2],cls:m[2]>8?'warn':'hi',tip:m[0]+': median '+m[2]+' h, '+m[1]+' deals'}}),{max:14,fmt:function(v){return v.toFixed(1)+' h'}});
+table('t-month',['Month','Meta deals','Median hours'],M.map(function(m){return [m[0],m[1],m[2].toFixed(1)]}));
+
+/* calls dot strip (log scale) */
+var vals=[0.03,0.1,0.28,0.37,0.43,0.81,1.03,1.53,1.69,3.42,14.72,36.78,41.59,74.59,92.98];
+var W0=720,H0=150,L=16,R=16,lo=Math.log10(0.01),hi=Math.log10(200);
+function X(v){return L+(Math.log10(v)-lo)/(hi-lo)*(W0-L-R)}
+var svg='<svg viewBox="0 0 '+W0+' '+H0+'" width="100%" style="display:block;max-width:100%" xmlns="http://www.w3.org/2000/svg">';
+var ticks=[[0.0167,'1 min'],[0.25,'15 min'],[1,'1 h'],[4,'4 h'],[24,'1 day'],[168,'7 days']];
+svg+='<rect x="'+X(0.01)+'" y="14" width="'+(X(1)-X(0.01))+'" height="90" fill="var(--s1)" opacity="0.10"/>';
+ticks.forEach(function(t){svg+='<line x1="'+X(t[0])+'" x2="'+X(t[0])+'" y1="14" y2="104" stroke="var(--grid)" stroke-width="1"/><text x="'+X(t[0])+'" y="124" text-anchor="middle">'+t[1]+'</text>'});
+svg+='<line x1="'+L+'" x2="'+(W0-R)+'" y1="104" y2="104" stroke="var(--line)"/>';
+svg+='<line x1="'+X(1.53)+'" x2="'+X(1.53)+'" y1="10" y2="104" stroke="var(--ink2)" stroke-dasharray="4 3" stroke-width="1.5"/><text x="'+(X(1.53)+5)+'" y="22">median 1.5 h</text>';
+var placed=[];
+vals.forEach(function(v){var x=X(v),row=0;while(placed.some(function(p){return p.row===row&&Math.abs(p.x-x)<15}))row++;placed.push({x:x,row:row});
+  svg+='<circle cx="'+x+'" cy="'+(94-row*15)+'" r="6" fill="var(--s1)" stroke="var(--surface)" stroke-width="2" data-v="'+v+'"/>'});
+svg+='</svg>';
+var host=document.getElementById('c-calls');host.innerHTML=svg;
+host.querySelectorAll('circle').forEach(function(c){var v=+c.getAttribute('data-v');bindTip(c,'First call '+(v<1?Math.round(v*60)+' min':v.toFixed(1)+' h')+' after contact was created')});
+table('c-calls',['Rank','Hours to first call'],vals.map(function(v,i){return [i+1,v.toFixed(2)]}));
+})();
+</script>
