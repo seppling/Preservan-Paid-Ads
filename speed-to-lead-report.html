@@ -121,10 +121,10 @@ svg text{fill:var(--ink2);font-family:var(--mono);font-size:11px}
       <div id="t-source"></div>
     </div>
     <div class="card">
-      <h3>Inside Meta: marketing flag</h3>
-      <div class="sub">Meta leads split by HubSpot marketing contact status.</div>
+      <h3>Meta booking rate by month created</h3>
+      <div class="sub">Share of each month's Meta leads now booked. September is still maturing.</div>
       <div id="c-mkt" role="img" aria-label="Meta booking rate by marketing contact status"></div>
-      <div class="take">A quarter of Meta leads carry the non-marketing flag and almost none book. This looks like low-intent volume, and it is the biggest single drag on the Meta rate.</div>
+      <div class="take">January to May and September ran at 39 to 66%, and July peaked at 81%. 116 Meta leads carry a non-marketing contact flag (13% booked), 89 of them from January to May. All of them are counted as Meta here.</div>
       <div id="t-mkt"></div>
     </div>
   </div>
@@ -217,7 +217,7 @@ svg text{fill:var(--ink2);font-family:var(--mono);font-size:11px}
 <section>
   <div><div class="eyebrow">Findings</div><h2>Key directional insights</h2></div>
   <div class="insights">
-    <div class="ins"><div class="tag">Booking</div><p><b>Meta books at 60%, other sources at 81 to 88%.</b> Most of the gap is the non-marketing Meta segment (13% booked, 116 leads).</p></div>
+    <div class="ins"><div class="tag">Booking</div><p><b>Meta books at 60%, other sources at 81 to 88%.</b> The gap is widest in Jan to May and Sep. Meta leads with a non-marketing flag (116) booked at 13% and skew to Not Interested, OOT and Cold.</p></div>
     <div class="ins"><div class="tag">Speed</div><p><b>Typical Meta deal appears in 3.4 hours.</b> Across all sources the typical lead is booked in under an hour, so Meta is the slow channel.</p></div>
     <div class="ins"><div class="tag">Coverage gap</div><p><b>Weekends and evenings are the weak spot.</b> Weekend Meta leads take 17 hours at the median and 6 to 9 PM leads take 14 hours, against 1.4 and 0.6 hours in the daytime.</p></div>
     <div class="ins"><div class="tag">Long tail</div><p><b>One in four Meta leads takes more than 4.7 days to book.</b> 53 Meta leads are still at New Lead after about 9 touches each, and 30 more are Cold Lead.</p></div>
@@ -228,7 +228,8 @@ svg text{fill:var(--ink2);font-family:var(--mono);font-size:11px}
     <h3>Suggested next steps</h3>
     <ul class="plain">
       <li><b>Cover weekends and evenings.</b> Use an auto-reply with a booking link, or extend CSR hours, for Meta leads created after 6 PM and on Saturday and Sunday.</li>
-      <li><b>Tighten Meta lead quality.</b> Review targeting and form questions with the agency to reduce the non-marketing segment.</li>
+      <li><b>Audit the marketing contact flag.</b> Meta leads should all be marketing contacts. Find what sets non-marketing in HubSpot, and fix it so source reporting stays clean.</li>
+      <li><b>Review Meta targeting and form questions</b> with the agency, using out-of-territory and Not Interested rates as the quality signal.</li>
       <li><b>Work the stalled leads.</b> Triage the 53 Meta New Lead and 30 Cold Lead contacts for reactivation or clean-up.</li>
       <li><b>Log the first call every time.</b> Without a timestamp, speed to first contact cannot be measured. Revisit in 60 to 90 days.</li>
     </ul>
@@ -239,6 +240,7 @@ svg text{fill:var(--ink2);font-family:var(--mono);font-size:11px}
       <li>Lead status is a current snapshot. Cancelled assessments, declined quotes and OOT assessments do not appear as statuses, so the booking rate may be slightly low.</li>
       <li>Time to deal depends on how and when deals were created in HubSpot. It matches the Customer timing for 603 of 707 leads that have both.</li>
       <li>CPL assumes all $27K went to Meta. If some went to search, Meta CPL falls and the other numbers move slightly.</li>
+      <li>The marketing contact flag is not used to define Meta. All 455 Paid Social leads count as Meta, including 116 flagged non-marketing, which is likely a tagging or cleanup effect. 89 of those were created Jan to May.</li>
       <li>5 emails and 51 phone numbers are duplicated across the 2026 contacts and were not de-duplicated.</li>
     </ul>
   </div>
@@ -291,11 +293,9 @@ hbars('c-source',[
 ],{max:100,fmt:function(v){return v.toFixed(0)+'%'},ref:73.2,refLabel:'73% all leads'});
 table('t-source',['Source','Leads','Booked','Rate'],[['Meta','455','272','59.8%'],['Offline','243','196','80.7%'],['Direct','173','153','88.4%'],['Organic search','60','53','88.3%'],['Paid search','30','26','86.7%'],['All leads','983','720','73.2%']]);
 
-hbars('c-mkt',[
-  {label:'Marketing contact',sub:'339 Meta leads',v:75.8,cls:'hi',tip:'257 of 339 booked'},
-  {label:'Non-marketing contact',sub:'116 Meta leads',v:12.9,cls:'warn',tip:'15 of 116 booked'}
-],{max:100,fmt:function(v){return v.toFixed(0)+'%'}});
-table('t-mkt',['Segment','Leads','Booked','Rate'],[['Marketing contact','339','257','75.8%'],['Non-marketing contact','116','15','12.9%']]);
+var BM=[['Jan',28,12],['Feb',41,28],['Mar',38,25],['Apr',45,26],['May',46,18],['Jun',37,21],['Jul',101,82],['Aug',61,38],['Sep',52,21]];
+hbars('c-mkt',BM.map(function(m){var r=m[2]/m[1]*100;return {label:m[0],sub:m[1]+' leads',v:r,cls:'hi',tip:m[0]+': '+m[2]+' of '+m[1]+' booked'}}),{max:100,fmt:function(v){return v.toFixed(0)+'%'},ref:59.8,refLabel:'60% all Meta'});
+table('t-mkt',['Month','Meta leads','Booked','Rate'],BM.map(function(m){return [m[0],m[1],m[2],(m[2]/m[1]*100).toFixed(1)+'%']}));
 
 /* histogram */
 var H=[['≤15m',49],['15–60m',21],['1–4h',19],['4–12h',19],['12–24h',22],['24–48h',28],['48–113h',17],['>113h',57]];
