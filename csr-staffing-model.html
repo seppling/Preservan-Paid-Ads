@@ -80,6 +80,14 @@ button.reset:focus-visible{outline:2px solid var(--s1);outline-offset:2px}
   <div class="take" id="take"></div>
 </div>
 
+<div class="card">
+  <h3>Do contact center fees cover it?</h3>
+  <div class="sub">Fees per location are the monthly fee plus the per-job fee on invoiced jobs. Jobs per location are gross revenue divided by average ticket, because the franchise disclosure document (FDD) does not report job counts.</div>
+  <div class="scroll"><table id="fees"></table></div>
+  <div class="take" id="fee-take"></div>
+  <div class="small">Revenue basis: Item 19 of the 2025 FDD, as reported by <a href="https://1851franchise.com/franchise-deep-dive-preservan-franchise-costs-fees-profit-and-data-2724793" target="_blank" rel="noopener">1851 Franchise</a>, for outlets open all of 2023 and 2024. Franchised Tulsa $137,427 and Orlando $406,300 (average $271,864). Company-owned Oklahoma City $401,054. Job counts and ticket are not disclosed. Contact center fee in those years was $3,600 a year. Today it is $350 a month plus $35 per invoiced job, per the same source.</div>
+</div>
+
 <div class="grid" id="hourly"></div>
 
 <div class="card">
@@ -124,14 +132,15 @@ button.reset:focus-visible{outline:2px solid var(--s1);outline-offset:2px}
 <script>
 (function(){
 var PROF=[0.0125, 0.0143, 0.0054, 0.0376, 0.0036, 0.0072, 0.0107, 0.034, 0.0555, 0.0984, 0.0805, 0.068, 0.0626, 0.0608, 0.0662, 0.0483, 0.0698, 0.0572, 0.034, 0.0429, 0.0411, 0.0286, 0.0411, 0.0197];
-var DEF={loc:20,lpd:2.5,extra:10,burst:1.25,open:7,close:22,talk:6,wrap:1,un:2,p1a:40,p1b:35,p1c:28,pf:15,nf:3,cb:25,shrink:30,target:90,occ:75,rate:14,srate:30,span:12};
+var DEF={loc:20,lpd:2.5,extra:10,burst:1.25,open:7,close:22,talk:6,wrap:1,un:2,p1a:40,p1b:35,p1c:28,pf:15,nf:3,cb:25,shrink:30,target:90,occ:75,rate:14,srate:30,span:12,rev:271864,tick:1700,mfee:350,jfee:35};
 var FIELDS=[
  ['g','Volume'],['loc','Locations'],['lpd','Leads per location per day'],['extra','Uplift for misrouted, duplicate or junk leads (%)'],['burst','Burst factor on hourly arrivals'],
  ['g','Coverage (Eastern time, 24-hour clock)'],['open','Opens at'],['close','Closes at'],
  ['g','Call handling'],['talk','Talk time on connected call (min)'],['wrap','Wrap-up and notes (min)'],['un','Unanswered attempt (min)'],['cb','Callbacks per lead (%)'],
  ['g','Connect rates'],['p1a','First attempt connects, target under 1 min (%)'],['p1b','First attempt connects, target under 5 min (%)'],['p1c','First attempt connects, target under 30 min (%)'],['pf','Each follow-up attempt connects (%)'],['nf','Follow-up attempts'],
  ['g','Staffing rules'],['target','Share of first calls on time (%)'],['occ','Occupancy cap (%)'],['shrink','Shrinkage (%)'],['span','Agents per supervisor'],
- ['g','Cost'],['rate','CSR loaded cost per hour ($)'],['srate','Supervisor loaded cost per hour ($)']
+ ['g','Cost'],['rate','CSR loaded cost per hour ($)'],['srate','Supervisor loaded cost per hour ($)'],
+ ['g','Fees and revenue per location'],['rev','Gross revenue per location per year ($)'],['tick','Average ticket per invoiced job ($)'],['mfee','Contact center fee per month ($)'],['jfee','Contact center fee per invoiced job ($)']
 ];
 var P={};function load(){for(var k in DEF)P[k]=DEF[k]}load();
 function erl(N,A,T,S){if(N<=A)return 0;var term=1,s=1;for(var k=1;k<N;k++){term*=A/k;s+=term}var tN=term*A/N,last=tN*N/(N-A),pw=last/(s+last);return 1-pw*Math.exp(-(N-A)*T/S)}
@@ -175,6 +184,20 @@ function render(){
   document.getElementById('scn').innerHTML='<tr><th>Metric</th>'+SC.map(function(s){return '<th>'+s[0]+'</th>'}).join('')+'</tr>'+rows.map(function(row,i){return '<tr'+(i===5?' class="key"':'')+'><td>'+row[0]+'</td>'+R.map(function(r){return '<td class="n">'+row[1](r)+'</td>'}).join('')+'</tr>'}).join('');
   var floor=Math.max(1,P.close-P.open)*7/(40*(1-P.shrink/100));
   document.getElementById('take').textContent='The workload is only '+f1(R[0].work)+' hours of calling a day, but one seat staffed '+(P.close-P.open)+' hours a day for 7 days takes '+f1(floor)+' FTE by itself. Tighter targets need 2 to '+R[0].peak+' agents ready at once, so speed adds '+f1(R[0].fte-R[2].fte)+' FTE (about '+usd(R[0].cost-R[2].cost)+' a year) over a 30-minute target.';
+  var jobs=P.rev/P.tick,feeLoc=12*P.mfee+P.jfee*jobs;
+  var ft='<tr><th>Metric</th>'+SC.map(function(s){return '<th>'+s[0]+'</th>'}).join('')+'</tr>';
+  var frows=[
+   ['Jobs per location per year',function(r){return Math.round(jobs)}],
+   ['Fees per location per year',function(r){return '$'+Math.round(feeLoc).toLocaleString()}],
+   ['Fees, all locations',function(r){return usd(feeLoc*P.loc)}],
+   ['CSR program cost',function(r){return usd(r.cost)}],
+   ['Share of cost covered by fees',function(r){return Math.round(feeLoc*P.loc/r.cost*100)+'%'}],
+   ['Gap per location per year',function(r){var g=(r.cost-feeLoc*P.loc)/P.loc;return (g>0?'$':'-$')+Math.abs(Math.round(g)).toLocaleString()}],
+   ['Per-job fee needed to break even',function(r){return '$'+Math.round((r.cost/P.loc-12*P.mfee)/jobs)}]
+  ];
+  ft+=frows.map(function(row,i){return '<tr'+(i===4?' class="key"':'')+'><td>'+row[0]+'</td>'+R.map(function(r){return '<td class="n">'+row[1](r)+'</td>'}).join('')+'</tr>'}).join('');
+  document.getElementById('fees').innerHTML=ft;
+  document.getElementById('fee-take').textContent='At about '+Math.round(jobs)+' jobs per location, fees of '+usd(feeLoc*P.loc)+' cover '+Math.round(feeLoc*P.loc/R[0].cost*100)+'% of a 1-minute program, '+Math.round(feeLoc*P.loc/R[1].cost*100)+'% of a 5-minute program and '+Math.round(feeLoc*P.loc/R[2].cost*100)+'% of a 30-minute program. The program cost covers calling only, so real cost is higher.';
   var hh='';
   R.forEach(function(r,i){
     var mx=Math.max.apply(null,r.hours.concat([1]));var cols='',labs='';
